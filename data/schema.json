@@ -1,0 +1,12 @@
+{
+  "tables": {
+    "speakers": ["id", "name", "slug", "bio_markdown", "headshot_url", "org", "role", "website", "socials", "consent_flags", "email", "created_at", "updated_at", "deleted_at"],
+    "sessions": ["id", "title", "slug", "abstract_markdown", "event_id", "datetime", "created_at", "updated_at", "deleted_at"],
+    "quotes": ["id", "speaker_id", "session_id", "quote_text", "source_timestamp", "approval_status", "created_at", "updated_at", "deleted_at"],
+    "concepts": ["id", "name", "slug", "description", "created_at", "updated_at", "deleted_at"],
+    "speaker_concepts": ["speaker_id", "concept_id", "created_at", "updated_at", "deleted_at"],
+    "session_concepts": ["session_id", "concept_id", "created_at", "updated_at", "deleted_at"],
+    "session_speakers": ["session_id", "speaker_id", "created_at", "updated_at", "deleted_at"],
+    "links": ["id", "source_type", "source_id", "target_type", "target_id", "relation_type", "created_at", "updated_at", "deleted_at"]
+  }
+}

@@ -6,7 +6,9 @@
     "target_type": "session",
     "target_id": "ai-co-workers-panel",
     "relation_type": "mentions",
-    "created_at": "2026-03-10T05:43:18.549Z"
+    "created_at": "2026-03-10T06:10:50.376Z",
+    "updated_at": "2026-03-10T06:10:50.376Z",
+    "deleted_at": null
   },
   {
     "id": "lnk_2",
@@ -15,7 +17,9 @@
     "target_type": "concept",
     "target_id": "future-of-work",
     "relation_type": "mentions",
-    "created_at": "2026-03-10T05:43:18.549Z"
+    "created_at": "2026-03-10T06:10:50.376Z",
+    "updated_at": "2026-03-10T06:10:50.376Z",
+    "deleted_at": null
   },
   {
     "id": "lnk_3",
@@ -24,7 +28,9 @@
     "target_type": "concept",
     "target_id": "future-of-work",
     "relation_type": "expertise",
-    "created_at": "2026-03-10T05:43:18.549Z"
+    "created_at": "2026-03-10T06:10:50.376Z",
+    "updated_at": "2026-03-10T06:10:50.376Z",
+    "deleted_at": null
   },
   {
     "id": "lnk_4",
@@ -33,7 +39,9 @@
     "target_type": "concept",
     "target_id": "healthcare-ai",
     "relation_type": "mentions",
-    "created_at": "2026-03-10T05:43:18.549Z"
+    "created_at": "2026-03-10T06:10:50.377Z",
+    "updated_at": "2026-03-10T06:10:50.377Z",
+    "deleted_at": null
   },
   {
     "id": "lnk_5",
@@ -42,7 +50,9 @@
     "target_type": "concept",
     "target_id": "healthcare-ai",
     "relation_type": "expertise",
-    "created_at": "2026-03-10T05:43:18.549Z"
+    "created_at": "2026-03-10T06:10:50.377Z",
+    "updated_at": "2026-03-10T06:10:50.377Z",
+    "deleted_at": null
   },
   {
     "id": "lnk_6",
@@ -50,8 +60,10 @@
     "source_id": "ai-co-workers-panel",
     "target_type": "concept",
     "target_id": "future-of-work",
-    "relation_type": "references",
-    "created_at": "2026-03-10T05:43:18.549Z"
+    "relation_type": "mentions",
+    "created_at": "2026-03-10T06:10:50.377Z",
+    "updated_at": "2026-03-10T06:10:50.377Z",
+    "deleted_at": null
   },
   {
     "id": "lnk_7",
@@ -59,8 +71,10 @@
     "source_id": "ai-co-workers-panel",
     "target_type": "concept",
     "target_id": "healthcare-ai",
-    "relation_type": "references",
-    "created_at": "2026-03-10T05:43:18.549Z"
+    "relation_type": "mentions",
+    "created_at": "2026-03-10T06:10:50.377Z",
+    "updated_at": "2026-03-10T06:10:50.377Z",
+    "deleted_at": null
   },
   {
     "id": "lnk_8",
@@ -68,8 +82,10 @@
     "source_id": "ai-co-workers-panel",
     "target_type": "speaker",
     "target_id": "kerin-vanandel",
-    "relation_type": "features",
-    "created_at": "2026-03-10T05:43:18.549Z"
+    "relation_type": "co_speaks_with",
+    "created_at": "2026-03-10T06:10:50.377Z",
+    "updated_at": "2026-03-10T06:10:50.377Z",
+    "deleted_at": null
   },
   {
     "id": "lnk_9",
@@ -77,7 +93,9 @@
     "source_id": "ai-co-workers-panel",
     "target_type": "speaker",
     "target_id": "thomas-andriola",
-    "relation_type": "features",
-    "created_at": "2026-03-10T05:43:18.549Z"
+    "relation_type": "co_speaks_with",
+    "created_at": "2026-03-10T06:10:50.377Z",
+    "updated_at": "2026-03-10T06:10:50.377Z",
+    "deleted_at": null
   }
 ]
