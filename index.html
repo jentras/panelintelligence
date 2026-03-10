@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIF 2025 — AI Co-Workers: Redefining Human Roles</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+  :root {
+    --orange: #E8500A;
+    --orange-light: #FF6B2B;
+    --orange-pale: #FFF3EE;
+    --black: #111111;
+    --gray-900: #1A1A1A;
+    --gray-700: #4A4A4A;
+    --gray-400: #999999;
+    --gray-200: #E8E8E8;
+    --gray-100: #F5F5F5;
+    --white: #FFFFFF;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--white);
+    color: var(--black);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gray-200);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 56px;
+  }
+  .nav-brand {
+    font-family: var(--sans); font-weight: 500; font-size: 13px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-700);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-brand span { color: var(--orange); }
+  .nav-pill {
+    background: var(--orange); color: white;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.06em;
+    padding: 4px 12px; border-radius: 100px;
+    text-transform: uppercase;
+  }
+  .nav-tabs { display: flex; gap: 4px; }
+  .nav-tab {
+    font-size: 13px; font-weight: 400; color: var(--gray-400);
+    padding: 6px 16px; border-radius: 100px; cursor: pointer;
+    transition: all 0.15s; border: none; background: none;
+  }
+  .nav-tab.active, .nav-tab:hover {
+    background: var(--gray-100); color: var(--black);
+  }
+  .nav-tab.active { color: var(--orange); background: var(--orange-pale); }
+
+  /* ── PANEL SWITCHER ── */
+  .panel-switcher {
+    display: flex; gap: 2px; background: var(--gray-100);
+    border-radius: 100px; padding: 3px; margin-left: 12px;
+  }
+  .panel-btn {
+    font-family: var(--sans); font-size: 12px; font-weight: 500;
+    color: var(--gray-400); padding: 4px 14px; border-radius: 100px;
+    cursor: pointer; border: none; background: none; transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .panel-btn.active { background: var(--white); color: var(--black); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+  /* ── HERO ── */
+  .hero {
+    margin-top: 56px;
+    padding: 80px 40px 60px;
+    max-width: 1200px; margin-left: auto; margin-right: auto;
+    margin-top: 56px;
+    display: grid; grid-template-columns: 1fr 360px; gap: 80px;
+    align-items: start;
+  }
+  .hero-eyebrow {
+    font-family: var(--sans); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange);
+    margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 24px; height: 1px; background: var(--orange);
+  }
+  .hero h1 {
+    font-family: var(--serif); font-size: clamp(36px, 5vw, 56px);
+    font-weight: 700; line-height: 1.1; letter-spacing: -0.02em;
+    color: var(--black); margin-bottom: 24px;
+  }
+  .hero h1 em { color: var(--orange); font-style: italic; }
+  .hero-meta {
+    display: flex; align-items: center; gap: 20px;
+    color: var(--gray-400); font-size: 13px; margin-bottom: 32px;
+  }
+  .hero-meta strong { color: var(--black); }
+  .hero-sep { width: 4px; height: 4px; background: var(--gray-200); border-radius: 50%; }
+  .hero-lead {
+    font-size: 17px; font-weight: 300; color: var(--gray-700);
+    line-height: 1.7; margin-bottom: 32px; max-width: 560px;
+  }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 5px 12px; border-radius: 100px;
+    background: var(--gray-100); color: var(--gray-700); border: 1px solid var(--gray-200);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .tag:hover, .tag.active {
+    background: var(--orange); color: white; border-color: var(--orange);
+  }
+
+  /* ── SIDEBAR CARDS ── */
+  .sidebar { display: flex; flex-direction: column; gap: 16px; padding-top: 80px; }
+
+  .signal-card {
+    border: 1px solid var(--gray-200); border-radius: 12px;
+    padding: 20px; cursor: pointer; transition: all 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .signal-card:hover { border-color: var(--orange); box-shadow: 0 4px 20px rgba(232,80,10,0.08); }
+  .signal-card.hot { border-color: var(--orange-light); background: var(--orange-pale); }
+  .signal-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--orange); margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .signal-label .dot {
+    width: 6px; height: 6px; background: var(--orange); border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+  }
+  .signal-card h4 {
+    font-family: var(--serif); font-size: 15px; font-weight: 600;
+    line-height: 1.35; color: var(--black); margin-bottom: 8px;
+  }
+  .signal-card p { font-size: 12px; color: var(--gray-700); line-height: 1.5; }
+
+  /* ── MAIN CONTENT AREA ── */
+  .content-wrapper {
+    max-width: 1200px; margin: 0 auto; padding: 0 40px 120px;
+    display: grid; grid-template-columns: 220px 1fr; gap: 60px;
+  }
+
+  /* ── LEFT NAV ── */
+  .section-nav {
+    position: sticky; top: 80px; height: fit-content;
+  }
+  .section-nav-title {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--gray-400); margin-bottom: 16px;
+  }
+  .section-link {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 13px; color: var(--gray-400);
+    padding: 8px 0; cursor: pointer; transition: color 0.15s;
+    border-left: 2px solid transparent; padding-left: 12px;
+    margin-left: -2px; line-height: 1.4;
+  }
+  .section-link:hover { color: var(--black); }
+  .section-link.active { color: var(--orange); border-left-color: var(--orange); }
+  .section-link .num {
+    font-size: 10px; font-weight: 600; color: var(--gray-200);
+    min-width: 18px;
+  }
+  .section-link.active .num { color: var(--orange); }
+
+  /* ── VIEW PANELS ── */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ── ARTICLE VIEW ── */
+  .article-section {
+    margin-bottom: 64px; padding-bottom: 64px;
+    border-bottom: 1px solid var(--gray-200);
+    scroll-margin-top: 80px;
+  }
+  .article-section:last-child { border-bottom: none; }
+  .section-heading {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--orange);
+    margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+  }
+  .section-heading::after {
+    content: ''; flex: 1; height: 1px; background: var(--gray-200);
+  }
+
+  .quote-block {
+    margin: 28px 0; padding: 0 0 0 24px;
+    border-left: 2px solid var(--orange);
+  }
+  .quote-block blockquote {
+    font-family: var(--serif); font-size: 20px; font-style: italic;
+    line-height: 1.5; color: var(--black); margin-bottom: 12px;
+  }
+  .quote-attr {
+    font-size: 12px; font-weight: 500; color: var(--gray-700);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .quote-attr img {
+    width: 24px; height: 24px; border-radius: 50%; object-fit: cover;
+  }
+  .quote-attr .avatar-placeholder {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--gray-200); display: inline-flex;
+    align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 600; color: var(--gray-700);
+    flex-shrink: 0;
+  }
+
+  .body-text {
+    font-size: 16px; font-weight: 300; line-height: 1.8;
+    color: var(--gray-700); margin-bottom: 20px;
+  }
+  .body-text strong { font-weight: 500; color: var(--black); }
+
+  .speaker-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--gray-100); border: 1px solid var(--gray-200);
+    border-radius: 100px; padding: 3px 10px 3px 4px;
+    font-size: 12px; font-weight: 500; color: var(--gray-700);
+    cursor: pointer; transition: all 0.15s; vertical-align: middle;
+    margin: 0 2px;
+  }
+  .speaker-tag .mini-avatar {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--orange); display: inline-flex;
+    align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 700; color: white;
+  }
+  .speaker-tag:hover { background: var(--orange-pale); border-color: var(--orange); color: var(--orange); }
+
+  /* ── MARKET SIGNALS ── */
+  .signals-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0;
+  }
+  .signal-item {
+    background: var(--gray-100); border-radius: 10px;
+    padding: 20px; border: 1px solid var(--gray-200);
+    transition: all 0.2s; cursor: pointer;
+  }
+  .signal-item:hover { border-color: var(--orange); background: var(--orange-pale); }
+  .signal-item .icon {
+    font-size: 22px; margin-bottom: 10px;
+  }
+  .signal-item h5 {
+    font-weight: 600; font-size: 14px; color: var(--black);
+    margin-bottom: 6px; line-height: 1.3;
+  }
+  .signal-item p { font-size: 12px; color: var(--gray-700); line-height: 1.5; }
+  .signal-item .stat {
+    font-family: var(--serif); font-size: 28px; font-weight: 700;
+    color: var(--orange); margin-bottom: 4px;
+  }
+
+  /* ── CLIFFNOTES VIEW ── */
+  .cliffnotes-hero {
+    background: var(--black); border-radius: 16px;
+    padding: 40px; margin-bottom: 32px; color: white;
+  }
+  .cliffnotes-hero h2 {
+    font-family: var(--serif); font-size: 28px; font-weight: 700;
+    margin-bottom: 12px; line-height: 1.2;
+  }
+  .cliffnotes-hero p { font-size: 14px; opacity: 0.6; line-height: 1.6; }
+
+  .takeaway-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+  .takeaway {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 20px; border: 1px solid var(--gray-200);
+    border-radius: 12px; cursor: pointer; transition: all 0.2s;
+  }
+  .takeaway:hover { border-color: var(--orange); background: var(--orange-pale); }
+  .takeaway-num {
+    font-family: var(--serif); font-size: 32px; font-weight: 700;
+    color: var(--gray-200); line-height: 1; flex-shrink: 0;
+    width: 40px;
+  }
+  .takeaway-body h4 {
+    font-weight: 600; font-size: 15px; color: var(--black);
+    margin-bottom: 6px; line-height: 1.3;
+  }
+  .takeaway-body p { font-size: 13px; color: var(--gray-700); line-height: 1.6; }
+  .takeaway-body .speaker-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; color: var(--orange); font-weight: 500;
+    margin-top: 8px;
+  }
+
+  /* ── MINDMAP VIEW ── */
+  .mindmap-container {
+    background: var(--gray-100); border-radius: 16px;
+    padding: 40px; min-height: 500px; position: relative;
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .mindmap-center {
+    background: var(--orange); color: white;
+    border-radius: 12px; padding: 16px 24px;
+    font-weight: 700; font-size: 15px; text-align: center;
+    width: fit-content; margin: 0 auto;
+    box-shadow: 0 8px 24px rgba(232,80,10,0.3);
+  }
+  .mindmap-branches {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;
+  }
+  .branch-group { display: flex; flex-direction: column; gap: 10px; }
+  .branch-title {
+    font-weight: 600; font-size: 13px; color: var(--black);
+    padding: 10px 14px; background: white; border-radius: 8px;
+    border-left: 3px solid var(--orange); box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .branch-leaf {
+    font-size: 12px; color: var(--gray-700);
+    padding: 8px 12px; background: white; border-radius: 8px;
+    margin-left: 16px; border-left: 2px solid var(--gray-200);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04); transition: all 0.15s;
+    cursor: pointer;
+  }
+  .branch-leaf:hover { border-left-color: var(--orange); color: var(--orange); }
+
+  /* ── SPEAKERS VIEW ── */
+  .speakers-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  }
+  .speaker-card {
+    border: 1px solid var(--gray-200); border-radius: 16px;
+    overflow: hidden; transition: all 0.2s; cursor: pointer;
+  }
+  .speaker-card:hover { border-color: var(--orange); box-shadow: 0 8px 32px rgba(232,80,10,0.1); }
+  .speaker-card.moderator { border-color: var(--orange); grid-column: 1 / -1; display: flex; }
+  .speaker-card-header {
+    padding: 28px; display: flex; gap: 20px; align-items: flex-start;
+  }
+  .speaker-card.moderator .speaker-card-header { flex: 1; }
+  .speaker-avatar {
+    width: 72px; height: 72px; border-radius: 14px;
+    background: var(--gray-100); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: 28px; font-weight: 700;
+    color: var(--gray-400); overflow: hidden;
+  }
+  .speaker-avatar.orange { background: var(--orange); color: white; font-size: 24px; }
+  .speaker-avatar.dark { background: var(--black); color: white; }
+  .speaker-info h3 {
+    font-family: var(--serif); font-size: 20px; font-weight: 700;
+    color: var(--black); margin-bottom: 4px;
+  }
+  .speaker-info .title {
+    font-size: 13px; color: var(--gray-700); margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .speaker-role-badge {
+    display: inline-flex; align-items: center;
+    background: var(--orange-pale); color: var(--orange);
+    font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 3px 10px; border-radius: 100px;
+    border: 1px solid rgba(232,80,10,0.2);
+  }
+  .speaker-bio {
+    padding: 0 28px 20px; font-size: 13px; color: var(--gray-700);
+    line-height: 1.7; border-top: 1px solid var(--gray-200);
+    padding-top: 16px;
+  }
+  .speaker-themes { padding: 0 28px 20px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .theme-chip {
+    font-size: 11px; color: var(--gray-700); background: var(--gray-100);
+    padding: 4px 10px; border-radius: 100px; border: 1px solid var(--gray-200);
+  }
+  .speaker-quotes-section {
+    padding: 16px 28px 24px; background: var(--gray-100);
+  }
+  .speaker-quotes-title {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--gray-400); margin-bottom: 12px;
+  }
+  .mini-quote {
+    font-family: var(--serif); font-size: 14px; font-style: italic;
+    color: var(--black); line-height: 1.5; margin-bottom: 8px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--gray-200);
+  }
+  .mini-quote:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .linkedin-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 500; color: #0077B5;
+    text-decoration: none; margin-top: 10px;
+    padding: 6px 12px; border: 1px solid #0077B5;
+    border-radius: 100px; transition: all 0.15s;
+  }
+  .linkedin-btn:hover { background: #0077B5; color: white; }
+
+  /* ── ATOMIC NOTES VIEW ── */
+  .notes-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .note-card {
+    border: 1px solid var(--gray-200); border-radius: 12px;
+    padding: 20px; cursor: pointer; transition: all 0.2s;
+    position: relative; min-height: 180px;
+    display: flex; flex-direction: column;
+  }
+  .note-card:hover { border-color: var(--orange); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .note-type {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--gray-400); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .note-type.insight { color: #7C3AED; }
+  .note-type.signal { color: var(--orange); }
+  .note-type.tension { color: #DC2626; }
+  .note-type.quote { color: #059669; }
+  .note-card h4 {
+    font-weight: 600; font-size: 14px; color: var(--black);
+    line-height: 1.4; margin-bottom: 8px;
+  }
+  .note-card p { font-size: 12px; color: var(--gray-700); line-height: 1.6; flex: 1; }
+  .note-footer {
+    margin-top: 14px; padding-top: 10px;
+    border-top: 1px solid var(--gray-200);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .note-speaker { font-size: 11px; color: var(--orange); font-weight: 500; }
+  .note-link-count { font-size: 11px; color: var(--gray-400); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px; background: var(--gray-200);
+    margin: 0 40px 40px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding: 60px 24px 40px; gap: 40px; }
+    .hero .sidebar { padding-top: 0; }
+    .content-wrapper { grid-template-columns: 1fr; padding: 0 24px 80px; }
+    .section-nav { display: none; }
+    .speakers-grid { grid-template-columns: 1fr; }
+    .speaker-card.moderator { flex-direction: column; }
+    .notes-grid { grid-template-columns: 1fr 1fr; }
+    .signals-grid { grid-template-columns: 1fr; }
+    nav { padding: 0 24px; }
+    .nav-tabs { display: none; }
+    .mindmap-branches { grid-template-columns: 1fr; }
+  }
+
+  /* ── INLINE HIGHLIGHT ── */
+  .highlight {
+    background: linear-gradient(120deg, rgba(232,80,10,0.1) 0%, rgba(232,80,10,0.15) 100%);
+    border-radius: 3px; padding: 1px 3px;
+  }
+
+  /* ── FADE IN ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .view.active { animation: fadeUp 0.3s ease; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <span>TIF 2025</span>
+    <div class="panel-switcher">
+      <button class="panel-btn active" onclick="switchPanel('p1', this)">AI Co-Workers</button>
+      <button class="panel-btn" onclick="switchPanel('p2', this)">Gov. Partnerships</button>
+    </div>
+  </div>
+  <div class="nav-tabs" id="nav-tabs-p1">
+    <button class="nav-tab active" onclick="switchView('article', this)">Article</button>
+    <button class="nav-tab" onclick="switchView('cliffnotes', this)">Cliff Notes</button>
+    <button class="nav-tab" onclick="switchView('notes', this)">Atomic Notes</button>
+    <button class="nav-tab" onclick="switchView('mindmap', this)">Mind Map</button>
+    <button class="nav-tab" onclick="switchView('speakers', this)">Speakers</button>
+  </div>
+  <div class="nav-tabs" id="nav-tabs-p2" style="display:none">
+    <button class="nav-tab active" onclick="switchView('p2-article', this)">Article</button>
+    <button class="nav-tab" onclick="switchView('p2-cliffnotes', this)">Cliff Notes</button>
+    <button class="nav-tab" onclick="switchView('p2-notes', this)">Atomic Notes</button>
+    <button class="nav-tab" onclick="switchView('p2-mindmap', this)">Mind Map</button>
+    <button class="nav-tab" onclick="switchView('p2-speakers', this)">Speakers</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">OC Innovation Week · Panel</div>
+    <h1>AI Co-Workers:<br><em>Redefining Human Roles</em><br>in the Workforce</h1>
+    <div class="hero-meta">
+      <strong>TIF 2025</strong>
+      <div class="hero-sep"></div>
+      <span>4 Speakers · 30 min</span>
+      <div class="hero-sep"></div>
+      <span>Future of Work</span>
+    </div>
+    <p class="hero-lead">Four industry leaders from education, construction, consulting, and real estate converge on one question: as AI becomes a co-worker, who wins, who adapts, and who gets left behind?</p>
+    <div class="hero-tags">
+      <span class="tag active">All</span>
+      <span class="tag">Upskilling</span>
+      <span class="tag">Automation</span>
+      <span class="tag">Ethics</span>
+      <span class="tag">Healthcare AI</span>
+      <span class="tag">Labor</span>
+    </div>
+  </div>
+  <div class="sidebar">
+    <div class="signal-card hot">
+      <div class="signal-label"><div class="dot"></div>Market Signal</div>
+      <h4>Hospital discharge: 112 steps → 10</h4>
+      <p>Ascertain AI cut the patient discharge process from 44 minutes to 12 via automation. Real ROI, now.</p>
+    </div>
+    <div class="signal-card">
+      <div class="signal-label">Quote to Know</div>
+      <h4>"Don't tell me you need more people. Tell me how you'll use AI to get more from the ones you have."</h4>
+      <p>— Spotify CEO, cited by Thomas Andriola, UC Irvine</p>
+    </div>
+    <div class="signal-card">
+      <div class="signal-label">Tension</div>
+      <h4>Not everyone wants to upskill — and that's valid</h4>
+      <p>A welder who earns more than most people in this room may simply not want a different job.</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- MAIN CONTENT WRAPPER -->
+<div class="content-wrapper">
+
+  <!-- LEFT SECTION NAV (article only) -->
+  <div class="section-nav" id="sectionNav">
+    <div class="section-nav-title">In This Panel</div>
+    <div class="section-link active" onclick="scrollTo('s1')" id="nav-s1">
+      <span class="num">01</span> How AI is reshaping industries
+    </div>
+    <div class="section-link" onclick="scrollTo('s2')" id="nav-s2">
+      <span class="num">02</span> The upskilling challenge
+    </div>
+    <div class="section-link" onclick="scrollTo('s3')" id="nav-s3">
+      <span class="num">03</span> Ethical integration
+    </div>
+    <div class="section-link" onclick="scrollTo('s4')" id="nav-s4">
+      <span class="num">04</span> Human touch & labor
+    </div>
+    <div class="section-link" onclick="scrollTo('s5')" id="nav-s5">
+      <span class="num">05</span> The future of AI roles
+    </div>
+    <div class="section-link" onclick="scrollTo('s6')" id="nav-s6">
+      <span class="num">06</span> Signals & takeaways
+    </div>
+  </div>
+
+  <!-- VIEWS -->
+  <div>
+
+    <!-- ══ ARTICLE VIEW ══ -->
+    <div id="view-article" class="view active">
+
+      <div id="s1" class="article-section">
+        <div class="section-heading">How AI is Reshaping Industries</div>
+
+        <p class="body-text">Moderator <span class="speaker-tag" onclick="switchView('speakers')"><span class="mini-avatar">K</span> Kerin VanAndel</span> opened with a deceptively simple prompt: how is AI reshaping your field right now? What followed was a snapshot of an economy mid-transformation — from operating rooms to construction sites.</p>
+
+        <div class="quote-block">
+          <blockquote>"It's disrupting — I think cerebrally, mentally disrupting everyone. Everyone's up at night thinking about how it's going to affect us personally."</blockquote>
+          <div class="quote-attr">
+            <span class="avatar-placeholder">P</span>
+            <strong>Pritha Sridharan</strong> · OC General Manager, Slalom
+          </div>
+        </div>
+
+        <p class="body-text">Pritha offered a consultant's vantage point — seeing dozens of clients across every sector at different stages of AI adoption. At Slalom, the integration is end-to-end: from how proposals are written to how consultants research niche subindustries. <strong>AI isn't disrupting consulting — it's re-energizing it.</strong></p>
+
+        <p class="body-text"><span class="speaker-tag" onclick="switchView('speakers')"><span class="mini-avatar">T</span> Thomas Andriola</span> gave the panel's most data-rich examples. In healthcare, ambient listening technology now captures patient-doctor conversations in real time, auto-generating clinical notes and reimbursement documentation. The physician gets back something they have wanted for decades: the ability to focus on the patient.</p>
+
+        <div class="quote-block">
+          <blockquote>"It gives the doctor back what they've wanted most — to focus on the patient, not on documentation."</blockquote>
+          <div class="quote-attr">
+            <span class="avatar-placeholder">T</span>
+            <strong>Thomas Andriola</strong> · Vice Chancellor IT & CDO, UC Irvine
+          </div>
+        </div>
+
+        <div class="signals-grid">
+          <div class="signal-item">
+            <div class="stat">112→10</div>
+            <h5>Hospital discharge steps</h5>
+            <p>Ascertain AI automated the discharge process, cutting cycle time from 44 mins to 12.</p>
+          </div>
+          <div class="signal-item">
+            <div class="stat">Harvard→🎧</div>
+            <h5>Case studies become podcasts</h5>
+            <p>Traditional PDFs are being converted into simulations and podcasts students walk through as characters.</p>
+          </div>
+          <div class="signal-item">
+            <div class="stat">∞ adapt</div>
+            <h5>Construction: always upskilling</h5>
+            <p>Skilled trades have continuously adapted to new tools — AI is the next in a long line.</p>
+          </div>
+          <div class="signal-item">
+            <div class="stat">All of us</div>
+            <h5>UCI's AI access mandate</h5>
+            <p>UC Irvine gave AI access to every professor, staff member, medical professional, and student.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="s2" class="article-section">
+        <div class="section-heading">The Upskilling Challenge</div>
+
+        <p class="body-text">When VanAndel pivoted to upskilling, <span class="speaker-tag" onclick="switchView('speakers')"><span class="mini-avatar">A</span> Andrew Gonzales</span> gave the panel its most grounding moment. Representing the LA/OC Building and Construction Trades Council, he noted that skilled trades have been continuously upskilling for decades — technology changes, tools change, processes change. That part isn't new.</p>
+
+        <p class="body-text">What's new is the <span class="highlight">emotional dimension</span>: not everyone <em>wants</em> to change the nature of their work, and that desire deserves respect.</p>
+
+        <div class="quote-block">
+          <blockquote>"Tell it to the bricklayer and the welder. They're going to want to do that work. And welding is a very good paying job — probably pays more than many here in this room."</blockquote>
+          <div class="quote-attr">
+            <span class="avatar-placeholder">A</span>
+            <strong>Andrew Gonzales</strong> · Council Rep, LA/OC Building & Construction Trades
+          </div>
+        </div>
+
+        <p class="body-text">Andriola built on this with UCI's approach: make it an "all of us" topic. The university created AI academies, gave access to tools broadly, and ran hackathons for teams to innovate on their own productivity. The goal was not compliance but agency — people who want to learn get the tools; they choose how far to push.</p>
+
+        <div class="quote-block">
+          <blockquote>"We're moving from 'AI won't take your job, someone who knows AI will' — to 'the person who can redefine the work using AI is the most valuable employee.'"</blockquote>
+          <div class="quote-attr">
+            <span class="avatar-placeholder">T</span>
+            <strong>Thomas Andriola</strong> · Vice Chancellor IT & CDO, UC Irvine
+          </div>
+        </div>
+      </div>
+
+      <div id="s3" class="article-section">
+        <div class="section-heading">Ethical Integration</div>
+
+        <p class="body-text">VanAndel steered the panel toward ethics: how do you use AI without eroding human judgment? Sridharan drew the line at authenticity. When AI writes college essays or builds resumes, it may technically help — but it undermines the signal those documents are meant to send. <strong>The ethical question isn't capability, it's displacement of genuine expression.</strong></p>
+
+        <p class="body-text">Andriola framed ethics through governance: UCI has a published AI ethics policy, is a member of the AAU AI Ethics consortium, and is actively developing generative AI guidelines that distinguish use from misuse. The analogy offered was calculators — at some point, society decided calculators in classrooms were acceptable. AI is that same conversation, happening faster and at greater scale.</p>
+
+        <div class="quote-block">
+          <blockquote>"At some point you need to decide, as a societal level, what's the equivalent of calculators in the classroom for generative AI."</blockquote>
+          <div class="quote-attr">
+            <span class="avatar-placeholder">T</span>
+            <strong>Thomas Andriola</strong> · Vice Chancellor IT & CDO, UC Irvine
+          </div>
+        </div>
+      </div>
+
+      <div id="s4" class="article-section">
+        <div class="section-heading">Human Touch & Labor</div>
+
+        <p class="body-text">Gonzales was the panel's honest skeptic — not anti-technology, but clear-eyed about who bears the cost of disruption. When jobs are displaced, the narrative of "new jobs will be created elsewhere" is cold comfort to the family that just lost its income today.</p>
+
+        <div class="quote-block">
+          <blockquote>"Yeah, we're gonna create a job someplace else. But tell that to the family that just lost their income."</blockquote>
+          <div class="quote-attr">
+            <span class="avatar-placeholder">A</span>
+            <strong>Andrew Gonzales</strong> · Council Rep, LA/OC Building & Construction Trades
+          </div>
+        </div>
+
+        <p class="body-text">The registered apprenticeship model he champions is itself a proof of concept: pay workers while they train, avoid crushing student debt, and build loyalty to the trade. That model — learning embedded in doing, earning while growing — may be exactly the blueprint the AI transition needs.</p>
+
+        <p class="body-text">Sridharan echoed this with the workplace strategy lens: JLL's work on physical environments mirrors the organizational challenge. <strong>The office is not just about where you sit — it's a signal of how you think about people.</strong> The same applies to AI rollouts.</p>
+      </div>
+
+      <div id="s5" class="article-section">
+        <div class="section-heading">The Future of AI Roles</div>
+
+        <p class="body-text">The panel's closing minutes turned to what's next. Andriola is betting on AI agents — not just AI tools. The progression he outlined: first, AI assists with tasks. Then, AI agents complete tasks autonomously. Finally, humans manage portfolios of AI agents. The new skill isn't knowing how to do the task; it's knowing how to direct, evaluate, and trust the agent doing it.</p>
+
+        <div class="quote-block">
+          <blockquote>"Be intentional about how you're spending your human time. Where does the human touch matter most — and protect that space."</blockquote>
+          <div class="quote-attr">
+            <span class="avatar-placeholder">A</span>
+            <strong>Andrew Gonzales</strong> · Council Rep, LA/OC Building & Construction Trades
+          </div>
+        </div>
+
+        <p class="body-text">For Sridharan, the advice was practical: start with your own workflow. Find something AI can do better or faster. Get comfortable. Then scale. The organizations winning with AI aren't the ones with the biggest budgets — they're the ones who created cultures of <span class="highlight">psychological safety to experiment.</span></p>
+      </div>
+
+      <div id="s6" class="article-section">
+        <div class="section-heading">Signals & Takeaways</div>
+
+        <div class="signals-grid">
+          <div class="signal-item">
+            <div class="icon">⚡</div>
+            <h5>Ambient listening = doctor's freedom</h5>
+            <p>AI transcription in clinical settings is the fastest-adopted healthcare AI. Low friction, immediate ROI.</p>
+          </div>
+          <div class="signal-item">
+            <div class="icon">🔧</div>
+            <h5>Trades are ahead, not behind</h5>
+            <p>Registered apprenticeship programs are structurally better for upskilling than university debt models.</p>
+          </div>
+          <div class="signal-item">
+            <div class="icon">🎓</div>
+            <h5>AI literacy = second interview</h5>
+            <p>In knowledge work, demonstrating AI fluency is now table stakes for competitive hiring.</p>
+          </div>
+          <div class="signal-item">
+            <div class="icon">⚖️</div>
+            <h5>The calculator moment</h5>
+            <p>Society is mid-debate on where AI use ends and human expression begins — especially in education.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /view-article -->
+
+    <!-- ══ CLIFF NOTES VIEW ══ -->
+    <div id="view-cliffnotes" class="view">
+      <div class="cliffnotes-hero">
+        <h2>30-Second Brief</h2>
+        <p>AI is here, it's reshaping every sector differently, and the real challenge isn't technology — it's the human systems that surround it: upskilling, ethics, identity, and who bears the cost of transition.</p>
+      </div>
+
+      <div class="section-heading" style="margin-bottom: 20px;">Key Takeaways</div>
+
+      <div class="takeaway-list">
+        <div class="takeaway">
+          <div class="takeaway-num">01</div>
+          <div class="takeaway-body">
+            <h4>AI is reducing administrative burden, not creative/care work — yet</h4>
+            <p>The biggest early wins (ambient clinical notes, discharge automation, document drafting) are all about removing low-value paperwork. The work that requires judgment, empathy, and presence is still firmly human territory.</p>
+            <div class="speaker-chip">↳ Thomas Andriola, Pritha Sridharan</div>
+          </div>
+        </div>
+        <div class="takeaway">
+          <div class="takeaway-num">02</div>
+          <div class="takeaway-body">
+            <h4>The most honest thing said: not everyone wants to change their work</h4>
+            <p>Andrew Gonzales cut through the upskilling hype. A welder who loves welding and earns $90K doesn't need to become a prompt engineer. Respecting that is part of ethical AI integration.</p>
+            <div class="speaker-chip">↳ Andrew Gonzales</div>
+          </div>
+        </div>
+        <div class="takeaway">
+          <div class="takeaway-num">03</div>
+          <div class="takeaway-body">
+            <h4>The progression: tool → agent → portfolio manager</h4>
+            <p>UCI's CDO laid out the arc clearly. First you use AI as a tool. Then you deploy AI agents autonomously. The final form of AI-era work is managing a portfolio of agents — a fundamentally different skill set.</p>
+            <div class="speaker-chip">↳ Thomas Andriola</div>
+          </div>
+        </div>
+        <div class="takeaway">
+          <div class="takeaway-num">04</div>
+          <div class="takeaway-body">
+            <h4>"All of us" mandates beat "some of us" pilots</h4>
+            <p>UCI gave every employee, student, and professor access to AI tools simultaneously. The signal sent: this isn't for the tech team — it's an institution-wide capability shift. Organizations treating AI as a departmental experiment are behind.</p>
+            <div class="speaker-chip">↳ Thomas Andriola</div>
+          </div>
+        </div>
+        <div class="takeaway">
+          <div class="takeaway-num">05</div>
+          <div class="takeaway-body">
+            <h4>Displacement cost falls on individuals, gains accrue to organizations</h4>
+            <p>The panel's sharpest tension: productivity gains from AI are captured by companies and institutions. The disruption costs — retraining, job loss, identity change — are borne by workers. This asymmetry is the ethical fault line.</p>
+            <div class="speaker-chip">↳ Andrew Gonzales</div>
+          </div>
+        </div>
+        <div class="takeaway">
+          <div class="takeaway-num">06</div>
+          <div class="takeaway-body">
+            <h4>The "calculator moment" framing is the most useful policy heuristic</h4>
+            <p>Society eventually decided calculators in math class were fine. That decision required debate, norms, and time. AI in knowledge work, education, and hiring needs the same deliberate societal negotiation — and it's already underway.</p>
+            <div class="speaker-chip">↳ Thomas Andriola</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /view-cliffnotes -->
+
+    <!-- ══ ATOMIC NOTES VIEW ══ -->
+    <div id="view-notes" class="view">
+      <div class="section-heading" style="margin-bottom: 24px;">Atomic Notes</div>
+      <p class="body-text" style="margin-bottom: 32px;">Discrete, linkable ideas extracted from the panel. Each note stands alone and connects to others.</p>
+
+      <div class="notes-grid">
+        <div class="note-card">
+          <div class="note-type signal">● Signal</div>
+          <h4>Ambient listening = fastest-adopted clinical AI</h4>
+          <p>Docs spend 30-40% of time on documentation. Auto-transcription solves the #1 complaint in healthcare IT instantly.</p>
+          <div class="note-footer">
+            <span class="note-speaker">Thomas Andriola</span>
+            <span class="note-link-count">→ Healthcare AI</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-type tension">● Tension</div>
+          <h4>New jobs created ≠ displaced workers helped</h4>
+          <p>"Tell that to the family that just lost its income." The future job market is cold comfort to current displacement.</p>
+          <div class="note-footer">
+            <span class="note-speaker">Andrew Gonzales</span>
+            <span class="note-link-count">→ Labor, Ethics</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-type insight">● Insight</div>
+          <h4>Apprenticeship = paid learning > debt-based learning</h4>
+          <p>Trades pay apprentices during training. This creates the economic equality that college debt models undermine.</p>
+          <div class="note-footer">
+            <span class="note-speaker">Andrew Gonzales</span>
+            <span class="note-link-count">→ Upskilling, Equity</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-type quote">● Quote</div>
+          <h4>"Don't tell me you need more people. Tell me how you'll use AI to get more from them."</h4>
+          <p>Spotify CEO, cited here as the new executive mandate. Headcount requests now require an AI utilization plan first.</p>
+          <div class="note-footer">
+            <span class="note-speaker">Thomas Andriola</span>
+            <span class="note-link-count">→ Org Design</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-type insight">● Insight</div>
+          <h4>AI literacy = table stakes for second interview</h4>
+          <p>In knowledge work, demonstrating you can use AI effectively is now assumed as a baseline skill, not a differentiator.</p>
+          <div class="note-footer">
+            <span class="note-speaker">Thomas Andriola</span>
+            <span class="note-link-count">→ Hiring, Upskilling</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-type signal">● Signal</div>
+          <h4>Harvard case study → podcast → simulation</h4>
+          <p>Static PDFs becoming interactive simulations where you play a character. Learning modality shifting fundamentally.</p>
+          <div class="note-footer">
+            <span class="note-speaker">Thomas Andriola</span>
+            <span class="note-link-count">→ EdTech</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-type insight">● Insight</div>
+          <h4>Psychological safety = prerequisite for AI adoption</h4>
+          <p>Organizations winning with AI have cultures where experimenting and failing with tools is accepted, not punished.</p>
+          <div class="note-footer">
+            <span class="note-speaker">Pritha Sridharan</span>
+            <span class="note-link-count">→ Culture, Change Mgmt</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-type tension">● Tension</div>
+          <h4>Who writes the college essay now?</h4>
+          <p>AI can write a better essay than most students. Does that help them — or hollow out the purpose of the application?</p>
+          <div class="note-footer">
+            <span class="note-speaker">Pritha Sridharan</span>
+            <span class="note-link-count">→ Ethics, Education</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-type signal">● Signal</div>
+          <h4>Discharge: 112 manual steps → 10</h4>
+          <p>Ascertain AI. Cycle time 44 min → 12 min. Patient satisfaction up. This is the template for AI ROI in operations.</p>
+          <div class="note-footer">
+            <span class="note-speaker">Thomas Andriola</span>
+            <span class="note-link-count">→ Healthcare, Automation</span>
+          </div>
+        </div>
+      </div>
+    </div><!-- /view-notes -->
+
+    <!-- ══ MIND MAP VIEW ══ -->
+    <div id="view-mindmap" class="view">
+      <div class="section-heading" style="margin-bottom: 24px;">Mind Map</div>
+
+      <div class="mindmap-container">
+        <div class="mindmap-center">AI Co-Workers: Future of Work</div>
+
+        <div class="mindmap-branches">
+          <div class="branch-group">
+            <div class="branch-title">🏥 Sector Impact</div>
+            <div class="branch-leaf">Healthcare: ambient notes</div>
+            <div class="branch-leaf">Education: AI TAs, simulations</div>
+            <div class="branch-leaf">Consulting: research + proposals</div>
+            <div class="branch-leaf">Construction: tool evolution</div>
+            <div class="branch-leaf">Tech: fewer headcount requests</div>
+          </div>
+          <div class="branch-group">
+            <div class="branch-title">📈 Upskilling Paths</div>
+            <div class="branch-leaf">UCI "All of us" model</div>
+            <div class="branch-leaf">AI academies + competitions</div>
+            <div class="branch-leaf">Apprenticeship = paid learning</div>
+            <div class="branch-leaf">Tool → Agent → Portfolio mgr</div>
+            <div class="branch-leaf">Respecting those who won't</div>
+          </div>
+          <div class="branch-group">
+            <div class="branch-title">⚖️ Ethical Tensions</div>
+            <div class="branch-leaf">AI essays vs. authentic voice</div>
+            <div class="branch-leaf">Calculator moment analogy</div>
+            <div class="branch-leaf">Displacement vs. creation</div>
+            <div class="branch-leaf">Gains to orgs, costs to workers</div>
+            <div class="branch-leaf">Human touch: when does it matter?</div>
+          </div>
+        </div>
+
+        <div class="mindmap-branches" style="margin-top: 8px;">
+          <div class="branch-group">
+            <div class="branch-title">💡 Key Signals</div>
+            <div class="branch-leaf">Ambient listening: fastest adoption</div>
+            <div class="branch-leaf">112→10 discharge steps</div>
+            <div class="branch-leaf">AI fluency = 2nd interview</div>
+          </div>
+          <div class="branch-group">
+            <div class="branch-title">🗣️ Notable Quotes</div>
+            <div class="branch-leaf">"Mentally disrupting everyone" — Pritha</div>
+            <div class="branch-leaf">"Tell the welder" — Andrew</div>
+            <div class="branch-leaf">"Rethink everything" — Thomas</div>
+          </div>
+          <div class="branch-group">
+            <div class="branch-title">🔮 Future State</div>
+            <div class="branch-leaf">Managing AI agent portfolios</div>
+            <div class="branch-leaf">Learning embedded in doing</div>
+            <div class="branch-leaf">AI as institutional infrastructure</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /view-mindmap -->
+
+    <!-- ══ SPEAKERS VIEW ══ -->
+    <div id="view-speakers" class="view">
+      <div class="section-heading" style="margin-bottom: 24px;">Panel Speakers</div>
+
+      <div class="speakers-grid">
+
+        <!-- MODERATOR -->
+        <div class="speaker-card moderator">
+          <div style="flex: 1;">
+            <div class="speaker-card-header">
+              <div class="speaker-avatar orange">KV</div>
+              <div class="speaker-info">
+                <h3>Kerin VanAndel</h3>
+                <div class="title">SVP, Workplace Strategy & Organizational Transformation · JLL</div>
+                <div class="speaker-role-badge">Moderator</div>
+              </div>
+            </div>
+            <div class="speaker-bio">
+              Kerin leads workplace strategy at JLL, one of the world's largest commercial real estate firms. Based in Los Angeles, her work sits at the intersection of organizational design and physical space — how the environments companies build reflect and shape how they think about their people. She moderated this panel with a practitioner's eye, connecting AI's workforce impact to the built environments where that work actually happens.
+            </div>
+            <div class="speaker-themes">
+              <span class="theme-chip">Workplace Strategy</span>
+              <span class="theme-chip">Org Transformation</span>
+              <span class="theme-chip">Real Estate</span>
+              <span class="theme-chip">Future of Work</span>
+            </div>
+            <div class="speaker-quotes-section">
+              <div class="speaker-quotes-title">From the Panel</div>
+              <div class="mini-quote">"How do we use those tools ethically — maintaining productivity while preserving the human element?"</div>
+            </div>
+          </div>
+          <div style="width: 1px; background: var(--gray-200); margin: 24px 0;"></div>
+          <div style="width: 200px; display: flex; align-items: center; justify-content: center; padding: 24px; flex-direction: column; gap: 12px;">
+            <div style="text-align: center;">
+              <div style="font-size: 11px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;">Organization</div>
+              <div style="font-weight: 600; font-size: 14px;">JLL</div>
+            </div>
+            <a href="https://www.linkedin.com/in/kerinvanandel" target="_blank" class="linkedin-btn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <!-- THOMAS -->
+        <div class="speaker-card">
+          <div class="speaker-card-header">
+            <div class="speaker-avatar dark">TA</div>
+            <div class="speaker-info">
+              <h3>Thomas Andriola</h3>
+              <div class="title">Vice Chancellor, IT & Data; Chief Digital Officer · UC Irvine</div>
+              <div class="speaker-role-badge">Panelist</div>
+            </div>
+          </div>
+          <div class="speaker-bio">
+            Thomas is UC Irvine's CDO, responsible for the digital and data strategy of one of the nation's top research universities and its associated health enterprise. He's led UCI's aggressive AI adoption — giving every student, faculty, and staff member access to AI tools simultaneously, creating the "all of us" model that became the panel's most-cited organizational approach.
+          </div>
+          <div class="speaker-themes">
+            <span class="theme-chip">Higher Education</span>
+            <span class="theme-chip">Healthcare AI</span>
+            <span class="theme-chip">Digital Transformation</span>
+            <span class="theme-chip">AI Governance</span>
+          </div>
+          <div class="speaker-quotes-section">
+            <div class="speaker-quotes-title">Key Quotes</div>
+            <div class="mini-quote">"Don't tell me you need more people. Tell me how you're going to use AI to get more work out of the people you have."</div>
+            <div class="mini-quote">"We're moving toward a world where the person who can redefine the work using AI is the most valuable employee."</div>
+          </div>
+          <div style="padding: 0 28px 20px;">
+            <a href="https://www.linkedin.com/in/thomasandriola" target="_blank" class="linkedin-btn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <!-- ANDREW -->
+        <div class="speaker-card">
+          <div class="speaker-card-header">
+            <div class="speaker-avatar" style="background: #1E3A5F; color: white;">AG</div>
+            <div class="speaker-info">
+              <h3>Andrew Gonzales</h3>
+              <div class="title">Council Representative · LA/OC Building & Construction Trades Council</div>
+              <div class="speaker-role-badge">Panelist</div>
+            </div>
+          </div>
+          <div class="speaker-bio">
+            Andrew represents skilled tradespeople across Los Angeles and Orange County — electricians, welders, plumbers, ironworkers. He brought the panel's most grounded perspective: that workers in skilled trades have been continuously adapting to new technology for decades, and that the real challenge isn't the technology, it's the economic and identity disruption that comes with forced change.
+          </div>
+          <div class="speaker-themes">
+            <span class="theme-chip">Labor Relations</span>
+            <span class="theme-chip">Skilled Trades</span>
+            <span class="theme-chip">Apprenticeship</span>
+            <span class="theme-chip">Workforce Equity</span>
+          </div>
+          <div class="speaker-quotes-section">
+            <div class="speaker-quotes-title">Key Quotes</div>
+            <div class="mini-quote">"Welding is a very good paying job — probably pays more than many here in this room."</div>
+            <div class="mini-quote">"Yeah, we're gonna create a job someplace else — but tell that to the family that just lost their income."</div>
+          </div>
+          <div style="padding: 0 28px 20px;">
+            <a href="https://www.linkedin.com/search/results/all/?keywords=Andrew+Gonzales+LA+OC+Building+Construction+Trades" target="_blank" class="linkedin-btn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              Search LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <!-- PRITHA -->
+        <div class="speaker-card">
+          <div class="speaker-card-header">
+            <div class="speaker-avatar" style="background: #0F4C81; color: white;">PS</div>
+            <div class="speaker-info">
+              <h3>Pritha Sridharan</h3>
+              <div class="title">OC General Manager · Slalom</div>
+              <div class="speaker-role-badge">Panelist</div>
+            </div>
+          </div>
+          <div class="speaker-bio">
+            Pritha leads Slalom's Orange County practice, a management consulting firm known for its client-first approach. Her vantage point is unusually broad: Slalom works across industries, giving her a real-time read on where different sectors actually are in their AI journeys — not where they say they are. She was the panel's bridge between the strategic and the human.
+          </div>
+          <div class="speaker-themes">
+            <span class="theme-chip">Management Consulting</span>
+            <span class="theme-chip">Change Management</span>
+            <span class="theme-chip">AI Adoption</span>
+            <span class="theme-chip">Professional Services</span>
+          </div>
+          <div class="speaker-quotes-section">
+            <div class="speaker-quotes-title">Key Quotes</div>
+            <div class="mini-quote">"It's mentally disrupting everyone — everyone's up at night thinking about how it's going to affect them personally."</div>
+            <div class="mini-quote">"It's actually re-energizing the consulting space. AI is helping us help our clients through their emotional journey too."</div>
+          </div>
+          <div style="padding: 0 28px 20px;">
+            <a href="https://www.linkedin.com/in/prithasridharan" target="_blank" class="linkedin-btn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /view-speakers -->
+
+  </div><!-- /views container -->
+</div><!-- /content-wrapper -->
+
+<!-- ════════════════════════════════════════════════
+     PANEL 2 — Government: How to Partner with the Largest Investor
+     ════════════════════════════════════════════════ -->
+<div id="panel-p2" style="display:none">
+
+<!-- HERO P2 -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">OC Innovation Week · Panel</div>
+    <h1>How to Partner with<br><em>the Largest Investor</em><br>in the US</h1>
+    <div class="hero-meta">
+      <strong>TIF 2025</strong>
+      <div class="hero-sep"></div>
+      <span>3 Speakers · 45 min</span>
+      <div class="hero-sep"></div>
+      <span>Government &amp; Innovation</span>
+    </div>
+    <p class="hero-lead">The US government deploys $6.75 trillion annually — and most businesses never tap it. Three experts demystify SBIR grants, SBA loans, defense contracts, and state programs, and explain why right now, even amid DOGE cuts, may be the best moment to start.</p>
+    <div class="hero-tags">
+      <span class="tag active">All</span>
+      <span class="tag">Grants</span>
+      <span class="tag">SBIR/STTR</span>
+      <span class="tag">Defense</span>
+      <span class="tag">Energy</span>
+      <span class="tag">Startups</span>
+    </div>
+  </div>
+  <div class="sidebar">
+    <div class="signal-card hot">
+      <div class="signal-label"><div class="dot"></div>Market Signal</div>
+      <h4>$80B in open federal grants right now</h4>
+      <p>1,600+ active opportunities across all agencies — even as DOGE restructures the bureaucracy.</p>
+    </div>
+    <div class="signal-card">
+      <div class="signal-label">Quote to Know</div>
+      <h4>"Government is not just the biggest investor — it's the biggest customer."</h4>
+      <p>— John Keisler, CEO, Sunstone</p>
+    </div>
+    <div class="signal-card">
+      <div class="signal-label">Tension</div>
+      <h4>NSF budget may be cut 55%, NIH 44%</h4>
+      <p>The $4.3B SBIR/STTR pool is a fixed % of agency budgets — cuts flow directly through to startups.</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="content-wrapper">
+
+  <div class="section-nav" id="sectionNav-p2">
+    <div class="section-nav-title">In This Panel</div>
+    <div class="section-link active" onclick="scrollToSec('p2s1')" id="nav-p2s1"><span class="num">01</span> Gov as investor &amp; customer</div>
+    <div class="section-link" onclick="scrollToSec('p2s2')" id="nav-p2s2"><span class="num">02</span> What the gov is buying</div>
+    <div class="section-link" onclick="scrollToSec('p2s3')" id="nav-p2s3"><span class="num">03</span> SBIR/STTR deep dive</div>
+    <div class="section-link" onclick="scrollToSec('p2s4')" id="nav-p2s4"><span class="num">04</span> Loans &amp; credit programs</div>
+    <div class="section-link" onclick="scrollToSec('p2s5')" id="nav-p2s5"><span class="num">05</span> Energy &amp; California angle</div>
+    <div class="section-link" onclick="scrollToSec('p2s6')" id="nav-p2s6"><span class="num">06</span> IP, rights &amp; playbook</div>
+  </div>
+
+  <div class="main-col">
+
+    <!-- ARTICLE VIEW P2 -->
+    <div id="view-p2-article" class="view active">
+
+      <div id="p2s1" class="article-section">
+        <div class="section-heading">Government as Investor &amp; Customer</div>
+        <p class="body-text">Jeff Burton opened with a reframe: forget the TV narrative of DOGE cuts and agency chaos. Even in the current environment, there are over <strong>1,600 open grant opportunities</strong> at the federal level totaling $80 billion, targeting 80,000 recipients. Add another $23 billion at the state level. The opportunity is not shrinking — it's shifting.</p>
+        <p class="body-text">John Keisler built on this with the LP metaphor: the federal government put $6.75 trillion into the economy in 2024. California's state budget added $300 billion more. When an anchor investor of that scale commits, private capital follows. That's not ideology — it's why the US attracts over 50% of global venture capital, and California captures more than half of that.</p>
+        <div class="quote-block">
+          <blockquote>"The economy itself is a partnership between government and the private sector. The reason we have a $24 trillion economy is because we have one of the greatest models in the world — where government is the biggest LP."</blockquote>
+          <div class="quote-attr">
+            <span class="avatar-placeholder">J</span>
+            <strong>John Keisler</strong> · CEO, Sunstone
+          </div>
+        </div>
+        <p class="body-text">The reframe goes further: government is not just an investor — it's the nation's largest customer. No entrepreneur has captured more government subsidies, contracts (NASA, DoD), and infrastructure than the current wealthiest person on earth. That's not an accident; it's a playbook.</p>
+      </div>
+
+      <div id="p2s2" class="article-section">
+        <div class="section-heading">What the Government Is Actually Buying</div>
+        <p class="body-text">Keisler came from Milken Global the week prior, where Commerce Secretary Lutnick repeated one word three times: <em>abundant</em>. The administration's core mandate is growth — stimulating the economy, catalyzing private investment, and above all, energy. Energy demand grew at 1.3% annually for a decade; last year it doubled to 2.4%.</p>
+        <p class="body-text">The drivers are obvious once named: AI data centers, EV charging, electrified port fleets, industrial 3D printing. The Port of Long Beach alone is projecting a 6x increase in electricity demand over five years as it electrifies ships, trains, and drayage vehicles. A single AI search requires 10x the power of a traditional web query.</p>
+        <div class="quote-block">
+          <blockquote>"Energy, energy, energy. The demand is growing by more than twice what it has been historically — and we need all kinds of new energy."</blockquote>
+          <div class="quote-attr">
+            <span class="avatar-placeholder">J</span>
+            <strong>John Keisler</strong> · CEO, Sunstone
+          </div>
+        </div>
+        <p class="body-text">Beyond energy, Martin Klecker emphasized that each federal agency publishes Notices of Special Interest — specific research priorities they're actively funding. NIH might want immunology breakthroughs. The USDA wants AgTech pest detection. The EPA wants soil remediation. Reading these notices is the first step to targeted, fundable proposals — not broad grant scattershot.</p>
+      </div>
+
+      <div id="p2s3" class="article-section">
+        <div class="section-heading">SBIR / STTR: The Non-Dilutive Engine</div>
+        <p class="body-text">Martin Klecker is the panel's practitioner on SBIR (Small Business Innovation Research) and STTR (Small Business Technology Transfer). His core message: these programs were designed precisely for the moment when equity investors won't take the risk — and they were expanded during the 2008 recession when angel and VC dried up.</p>
+        <p class="body-text">The programs span 11-12 federal agencies and total approximately $4.3–4.5 billion annually. They're open not just to startups, but to any established business with a disruptive innovation seeking seed funding. The government becomes a non-equity, non-dilutive investor — you keep the company, you keep the IP.</p>
+        <div class="quote-block">
+          <blockquote>"If you have a disruptive or discontinuous innovation where the equity investor community isn't ready — this is the best way to go. Time-consuming, but worth its weight in gold."</blockquote>
+          <div class="quote-attr">
+            <span class="avatar-placeholder">M</span>
+            <strong>Martin Klecker</strong> · Director, EPIC SBDC
+          </div>
+        </div>
+        <p class="body-text">Success rates: historically 11–18% for Phase 1 awards. With Klecker's "extreme handholding" process at UC Riverside, his team gets clients to 35%. The Phase 1 → Phase 2 transition rate has dropped from ~45% to ~30-35%. Key tactic: build a corporate partner relationship before submitting — it signals to reviewers that you have a validated market and a committed commercialization path.</p>
+        <p class="body-text">Burton noted the appropriations wildcard: congressional earmarks ("congressionally directed spending") are back. Talk to your member of Congress. Timeline is 1-3 years, but politicians want to bring jobs to their districts — align your pitch to that.</p>
+      </div>
+
+      <div id="p2s4" class="article-section">
+        <div class="section-heading">Beyond Grants: Loans, SBIC, and SSBCI</div>
+        <p class="body-text">Keisler laid out the government's full capital stack. Grants are first — non-dilutive R&amp;D for the earliest stage. As sectors mature, the government transitions from grants to loan guarantees and credit enhancements, and eventually exits when private lenders see enough certainty to underwrite independently. It's a deliberately staged exit strategy.</p>
+        <p class="body-text">Two underutilized programs stood out. First: <strong>SBIC funds</strong> (Small Business Investment Companies) — private equity and credit funds that get 1:1 or even 2:1 leverage from the SBA. They're required by charter to invest in small businesses at the growth stage. Most entrepreneurs have never heard of them.</p>
+        <div class="quote-block">
+          <blockquote>"SBIC funds are one of the best kept secrets in government-backed capital. They have to find your companies — they need to meet their charter."</blockquote>
+          <div class="quote-attr">
+            <span class="avatar-placeholder">J</span>
+            <strong>John Keisler</strong> · CEO, Sunstone
+          </div>
+        </div>
+        <p class="body-text">Second: <strong>SSBCI</strong> (State Small Business Credit Initiative). California received $1.2 billion from the Inflation Reduction Act. State Treasurer Fiona Ma has it in the bank and is trying to deploy it. Structure: $800M sits as a loan loss reserve, providing an 80% guarantee against losses to private lenders who make loans to small businesses. The money isn't going anywhere — it's sitting waiting for lenders to use it.</p>
+      </div>
+
+      <div id="p2s5" class="article-section">
+        <div class="section-heading">Energy, California &amp; the Moore's Law Moment</div>
+        <p class="body-text">For founders worried that federal EV and renewable support is being rolled back under the current administration, Keisler had a direct answer: you live in California. The state is doubling down with a nearly $50 billion commitment to clean and renewable energy through CEC, CARB, and AQMD — specifically targeting startups.</p>
+        <p class="body-text">California voters passed a $10 billion climate bond in November 2024. It covers energy production, storage, distribution, virtual power plants, and microgrids — from offshore wind at scale down to AI software managing grid infrastructure. Sunstone Advisors is raising a $250 million clean energy infrastructure fund in partnership with Aries Management.</p>
+        <div class="quote-block">
+          <blockquote>"This is the Moore's Law moment for renewable energy. We need so much more, so much more quickly — and the technology is already here."</blockquote>
+          <div class="quote-attr">
+            <span class="avatar-placeholder">J</span>
+            <strong>John Keisler</strong> · CEO, Sunstone
+          </div>
+        </div>
+        <p class="body-text">A concrete example from the portfolio: a startup converting medium-duty delivery vehicles (18 million in North America) to full battery electric in two days — extending vehicle life 25 years and lowering operating costs. They need charging infrastructure and on-site energy generation. California has programs specifically designed to fund that stack.</p>
+      </div>
+
+      <div id="p2s6" class="article-section">
+        <div class="section-heading">IP Rights, March-In, and the Founder's Playbook</div>
+        <p class="body-text">The room's concern about government ownership was addressed directly by Klecker. When you win an SBIR/STTR grant and generate IP using federal funding, the government gets a <em>limited, non-exclusive license</em> for internal use only. They are not commercializing it. You own the technology. The Bayh-Dole Act governs this — and its "march-in rights" clause (the government's ability to reassign IP if you fail to commercialize) has essentially never been exercised.</p>
+
+        <div class="signals-grid">
+          <div class="signal-item">
+            <div class="icon">📋</div>
+            <h5>Start with a Statement of Aims</h5>
+            <p>Klecker's first requirement for any client. Then schedule a call with a program director before submitting — probe fit and direction.</p>
+          </div>
+          <div class="signal-item">
+            <div class="icon">🤝</div>
+            <h5>Get a corporate partner first</h5>
+            <p>A corporate partner signals market validation to reviewers — and may commit to commercializing your tech if aims are met. Substantially increases win rate.</p>
+          </div>
+          <div class="signal-item">
+            <div class="icon">🏛️</div>
+            <h5>Call your member of Congress</h5>
+            <p>They have staff specifically for this. Earmarks take 1-3 years but align perfectly with politicians' need to deliver jobs to their district.</p>
+          </div>
+          <div class="signal-item">
+            <div class="icon">⚡</div>
+            <h5>Defense funds everything</h5>
+            <p>DoD has 13 critical technology areas. One panelist's cervical cancer startup was fully funded by Army Research Labs. Cross-agency thinking unlocks unexpected sources.</p>
+          </div>
+          <div class="signal-item">
+            <div class="icon">🔍</div>
+            <h5>Read agency Notices of Interest</h5>
+            <p>Each agency publishes specific topic areas they want proposals on. Check what they've funded in the last 3-5 years and what they're signaling for the next 2-3.</p>
+          </div>
+          <div class="signal-item">
+            <div class="icon">💰</div>
+            <h5>SSBCI: $800M sitting in California</h5>
+            <p>80% loan loss guarantee for private lenders backing small businesses. The money is deployed, waiting. Most entrepreneurs have never heard of it.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /view-p2-article -->
+
+    <!-- CLIFF NOTES P2 -->
+    <div id="view-p2-cliffnotes" class="view">
+      <div class="cliffnotes-hero">
+        <div class="cn-label">30-Second Brief</div>
+        <h2>The government is the largest investor, the largest customer, and the most underutilized funding source for most startups. Even with DOGE restructuring, $80B+ in grants are open right now. The path: know your agency, build relationships with program directors, get a corporate partner, and stack grant → loan → credit enhancement as you scale.</h2>
+      </div>
+      <div class="takeaways">
+        <div class="takeaway">
+          <div class="takeaway-num">01</div>
+          <div class="takeaway-body">
+            <h4>Government is the biggest LP — $6.75 trillion in 2024</h4>
+            <p>This isn't ideology. It's the structural reason the US attracts more than 50% of global VC and California captures half of that. The anchor investor de-risks everything downstream.</p>
+            <div class="speaker-chip">↳ John Keisler</div>
+          </div>
+        </div>
+        <div class="takeaway">
+          <div class="takeaway-num">02</div>
+          <div class="takeaway-body">
+            <h4>$80B in active federal grants — apply like you pitch VCs</h4>
+            <p>1,600+ open opportunities even amid DOGE cuts. Apply for 10, expect 1-2 wins. That's $500K to tens of millions in non-dilutive capital. The process is demanding but the ROI math is hard to beat.</p>
+            <div class="speaker-chip">↳ Jeff Burton</div>
+          </div>
+        </div>
+        <div class="takeaway">
+          <div class="takeaway-num">03</div>
+          <div class="takeaway-body">
+            <h4>Know your program director before submitting</h4>
+            <p>Relationship-building with agency program directors is not schmoozing — it shapes what gets funded. If they like your idea, your topic can show up in the next solicitation round. You then have an inside track.</p>
+            <div class="speaker-chip">↳ Martin Klecker</div>
+          </div>
+        </div>
+        <div class="takeaway">
+          <div class="takeaway-num">04</div>
+          <div class="takeaway-body">
+            <h4>SBIC funds are the best-kept secret in startup finance</h4>
+            <p>Government-backed private equity funds with 1:1 or 2:1 SBA leverage, required by charter to invest in your growth-stage company. Almost nobody knows they exist.</p>
+            <div class="speaker-chip">↳ John Keisler</div>
+          </div>
+        </div>
+        <div class="takeaway">
+          <div class="takeaway-num">05</div>
+          <div class="takeaway-body">
+            <h4>Defense funds the unexpected — including healthcare and life science</h4>
+            <p>DoD has 13 critical technology areas spanning energy, engineering, manufacturing, transportation, and more. Army Research Labs funded a cervical cancer diagnostics startup. Think cross-agency, not just your obvious home agency.</p>
+            <div class="speaker-chip">↳ Martin Klecker</div>
+          </div>
+        </div>
+        <div class="takeaway">
+          <div class="takeaway-num">06</div>
+          <div class="takeaway-body">
+            <h4>California is doubling down while the feds pause</h4>
+            <p>$10B climate bond passed November 2024. $50B clean energy commitment through CEC and CARB. $800M SSBCI loan loss reserve waiting for lenders. California is the backstop for founders worried about federal program cuts.</p>
+            <div class="speaker-chip">↳ John Keisler</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /view-p2-cliffnotes -->
+
+    <!-- ATOMIC NOTES P2 -->
+    <div id="view-p2-notes" class="view">
+      <div class="section-heading" style="margin-bottom:24px">Atomic Notes</div>
+      <p class="body-text" style="margin-bottom:32px">Discrete, linkable ideas extracted from the panel. Each note stands alone and connects to others.</p>
+      <div class="notes-grid">
+        <div class="note-card">
+          <div class="note-type signal">● Signal</div>
+          <h4>$80B in federal grants open right now</h4>
+          <p>Even with DOGE cuts, 1,600+ opportunities exist. The chaos creates noise — not a funding vacuum.</p>
+          <div class="note-footer"><span class="note-speaker">Jeff Burton</span><span class="note-link-count">→ Grants, Policy</span></div>
+        </div>
+        <div class="note-card">
+          <div class="note-type insight">● Insight</div>
+          <h4>Government exits sectors when private lenders arrive</h4>
+          <p>The funding arc: grants → loan guarantees → credit enhancements → private markets. Government deliberately pulls out as risk becomes legible to commercial lenders.</p>
+          <div class="note-footer"><span class="note-speaker">John Keisler</span><span class="note-link-count">→ Capital Stack, Strategy</span></div>
+        </div>
+        <div class="note-card">
+          <div class="note-type tension">● Tension</div>
+          <h4>NSF / NIH budgets under 40-55% cut pressure</h4>
+          <p>SBIR pool is a fixed % of agency budgets. If NSF loses 55%, that $4.3B shrinks proportionally — and you're competing for fewer dollars.</p>
+          <div class="note-footer"><span class="note-speaker">Martin Klecker</span><span class="note-link-count">→ Policy Risk, SBIR</span></div>
+        </div>
+        <div class="note-card">
+          <div class="note-type insight">● Insight</div>
+          <h4>Corporate partner = inside track on SBIR win</h4>
+          <p>A committed corporate partner who says "we'll buy this if it works" nearly doubles your win probability. It signals market validation that reviewers can't get from the proposal alone.</p>
+          <div class="note-footer"><span class="note-speaker">Martin Klecker</span><span class="note-link-count">→ SBIR, Partnerships</span></div>
+        </div>
+        <div class="note-card">
+          <div class="note-type signal">● Signal</div>
+          <h4>Energy demand doubled its growth rate last year</h4>
+          <p>Historical growth: 1.3%/yr. Last year: 2.4%. Drivers: data centers, EV charging, electrified port infrastructure. Moore's Law moment for clean energy.</p>
+          <div class="note-footer"><span class="note-speaker">John Keisler</span><span class="note-link-count">→ Energy, Investment</span></div>
+        </div>
+        <div class="note-card">
+          <div class="note-type quote">● Quote</div>
+          <h4>"Government isn't just the biggest LP — it's the biggest customer."</h4>
+          <p>SpaceX, Tesla, and Starlink's growth paths all ran through NASA and DoD contracts. Government procurement is a business model, not just a funding line.</p>
+          <div class="note-footer"><span class="note-speaker">John Keisler</span><span class="note-link-count">→ Strategy, Defense</span></div>
+        </div>
+        <div class="note-card">
+          <div class="note-type insight">● Insight</div>
+          <h4>Bayh-Dole Act: you keep the IP</h4>
+          <p>Federal funding generates federal license rights — limited, non-exclusive, internal use only. March-in rights exist but have essentially never been used. Founders' IP fears are largely misplaced.</p>
+          <div class="note-footer"><span class="note-speaker">Martin Klecker</span><span class="note-link-count">→ IP, Legal</span></div>
+        </div>
+        <div class="note-card">
+          <div class="note-type signal">● Signal</div>
+          <h4>California SSBCI: $800M loan reserve sitting idle</h4>
+          <p>80% loss guarantee for private lenders making small business loans. IRA money, already received, in the state's bank. The mechanism is built — it's waiting for lenders to use it.</p>
+          <div class="note-footer"><span class="note-speaker">John Keisler</span><span class="note-link-count">→ California, Loans</span></div>
+        </div>
+        <div class="note-card">
+          <div class="note-type insight">● Insight</div>
+          <h4>Army Research Labs funded cervical cancer diagnostics</h4>
+          <p>DoD's 13 critical tech areas reach far beyond weapons. Clinical trials ran at Army Medical Centers. Cross-agency thinking unlocks funding that traditional grant-seekers miss entirely.</p>
+          <div class="note-footer"><span class="note-speaker">Martin Klecker</span><span class="note-link-count">→ Defense, Healthcare</span></div>
+        </div>
+      </div>
+    </div><!-- /view-p2-notes -->
+
+    <!-- MIND MAP P2 -->
+    <div id="view-p2-mindmap" class="view">
+      <div class="section-heading" style="margin-bottom:24px">Mind Map</div>
+      <div class="mindmap-container">
+        <div class="mindmap-center">Gov as Investor: Partnering with the Largest LP</div>
+        <div class="mindmap-branches">
+          <div class="branch-group">
+            <div class="branch-title">💰 Funding Types</div>
+            <div class="branch-leaf">SBIR / STTR grants</div>
+            <div class="branch-leaf">SBA loans</div>
+            <div class="branch-leaf">SBIC private equity funds</div>
+            <div class="branch-leaf">SSBCI loan loss reserve</div>
+            <div class="branch-leaf">Congressional earmarks</div>
+          </div>
+          <div class="branch-group">
+            <div class="branch-title">🏛️ Key Agencies</div>
+            <div class="branch-leaf">NSF, NIH, USDA, EPA</div>
+            <div class="branch-leaf">Dept. of Energy</div>
+            <div class="branch-leaf">Dept. of Defense (DoD)</div>
+            <div class="branch-leaf">SBA</div>
+            <div class="branch-leaf">California CEC / CARB</div>
+          </div>
+          <div class="branch-group">
+            <div class="branch-title">⚡ Hot Sectors</div>
+            <div class="branch-leaf">Energy storage &amp; grid tech</div>
+            <div class="branch-leaf">EV &amp; fleet electrification</div>
+            <div class="branch-leaf">AI infrastructure</div>
+            <div class="branch-leaf">AgTech &amp; remediation</div>
+            <div class="branch-leaf">Defense tech (13 CTAs)</div>
+          </div>
+        </div>
+        <div class="mindmap-branches" style="margin-top:8px">
+          <div class="branch-group">
+            <div class="branch-title">🎯 Win Strategies</div>
+            <div class="branch-leaf">Build program director relationships</div>
+            <div class="branch-leaf">Get corporate partner first</div>
+            <div class="branch-leaf">Read Notices of Special Interest</div>
+            <div class="branch-leaf">Extreme handholding process</div>
+          </div>
+          <div class="branch-group">
+            <div class="branch-title">⚖️ Key Risks</div>
+            <div class="branch-leaf">NSF/NIH budget cuts 40-55%</div>
+            <div class="branch-leaf">Phase 2 transition harder (45%→30%)</div>
+            <div class="branch-leaf">DOGE uncertainty / timeline delays</div>
+            <div class="branch-leaf">March-in rights (rare but exists)</div>
+          </div>
+          <div class="branch-group">
+            <div class="branch-title">🔮 Big Picture</div>
+            <div class="branch-leaf">Gov = anchor LP attracting private VC</div>
+            <div class="branch-leaf">Moore's Law moment for clean energy</div>
+            <div class="branch-leaf">Defense is the floor that won't be cut</div>
+            <div class="branch-leaf">California backstops federal pullback</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /view-p2-mindmap -->
+
+    <!-- SPEAKERS P2 -->
+    <div id="view-p2-speakers" class="view">
+      <div class="section-heading" style="margin-bottom:24px">Panel Speakers</div>
+      <div class="speakers-grid">
+
+        <!-- MODERATOR -->
+        <div class="speaker-card moderator">
+          <div class="speaker-header">
+            <div class="speaker-avatar">JB</div>
+            <div class="speaker-info">
+              <div class="speaker-role-badge moderator-badge">Moderator</div>
+              <h3>Jeff Burton</h3>
+              <div class="speaker-title">President &amp; CEO, Maven Advocacy Partners</div>
+            </div>
+          </div>
+          <p class="speaker-bio">One of Washington DC's top government affairs and lobbying professionals. Started his career in Orange County before spending 20+ years in DC working across Republican and Democratic administrations, helping win congressional majorities. Deep expertise in navigating federal funding, appropriations, and public-private advocacy.</p>
+          <div class="speaker-topics">
+            <span class="topic-chip">Federal Grants</span>
+            <span class="topic-chip">Appropriations</span>
+            <span class="topic-chip">Advocacy Strategy</span>
+            <span class="topic-chip">Congressional Relations</span>
+          </div>
+          <div class="speaker-quotes">
+            <div class="speaker-quote-item">"Even with all the changes, there's over 1,600 open grant opportunities totaling $80 billion."</div>
+            <div class="speaker-quote-item">"The earmark is back. Talk to your member of Congress — they have staff specifically to help you."</div>
+          </div>
+        </div>
+
+        <!-- PANELISTS -->
+        <div class="speaker-card">
+          <div class="speaker-header">
+            <div class="speaker-avatar">JK</div>
+            <div class="speaker-info">
+              <div class="speaker-role-badge">Panelist</div>
+              <h3>John Keisler</h3>
+              <div class="speaker-title">CEO, Sunstone</div>
+            </div>
+          </div>
+          <p class="speaker-bio">20 years in economic development with the City of Long Beach, now CEO of Sunstone — a firm combining a government consulting group (Sunstone Cities) and a registered investment advisor (Sunstone Advisors) to connect private capital with public economic development. Currently raising a $250M clean energy infrastructure fund.</p>
+          <div class="speaker-topics">
+            <span class="topic-chip">Economic Development</span>
+            <span class="topic-chip">SBIC Funds</span>
+            <span class="topic-chip">Clean Energy</span>
+            <span class="topic-chip">Capital Strategy</span>
+          </div>
+          <div class="speaker-quotes">
+            <div class="speaker-quote-item">"Government is not just the biggest investor — it's the biggest customer."</div>
+            <div class="speaker-quote-item">"This is the Moore's Law moment for renewable energy."</div>
+          </div>
+        </div>
+
+        <div class="speaker-card">
+          <div class="speaker-header">
+            <div class="speaker-avatar">MK</div>
+            <div class="speaker-info">
+              <div class="speaker-role-badge">Panelist</div>
+              <h3>Martin Klecker III, PhD MBA</h3>
+              <div class="speaker-title">Director, EPIC SBDC</div>
+            </div>
+          </div>
+          <p class="speaker-bio">Economist by training, former Fortune 100/500 strategist across Europe, Asia, and the Americas with heavy M&amp;A and strategic economics background. Spent 7-8 years commercializing and capitalizing early-stage ventures out of UC Riverside, UC Irvine, UC San Diego. Manages SBIR/STTR submissions with a 35% win rate through intensive "extreme handholding" preparation.</p>
+          <div class="speaker-topics">
+            <span class="topic-chip">SBIR / STTR</span>
+            <span class="topic-chip">Early-Stage Ventures</span>
+            <span class="topic-chip">University Commercialization</span>
+            <span class="topic-chip">Federal Grant Writing</span>
+          </div>
+          <div class="speaker-quotes">
+            <div class="speaker-quote-item">"You have a choice: get abused by me, or get abused by the review section. They'll say bring it on."</div>
+            <div class="speaker-quote-item">"If a program director likes your idea, your topic can appear in the next solicitation — and you'll have an inside track."</div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /view-p2-speakers -->
+
+  </div><!-- /main-col -->
+</div><!-- /content-wrapper -->
+</div><!-- /panel-p2 -->
+
+<script>
+  let currentPanel = 'p1';
+
+  function switchPanel(panelId, btn) {
+    currentPanel = panelId;
+
+    // Toggle panel wrappers
+    document.getElementById('panel-p2').style.display = panelId === 'p2' ? 'block' : 'none';
+
+    // Toggle hero (panel 1 hero is always in the root)
+    const p1Hero = document.querySelector('.hero');
+    const p1Divider = document.querySelector('.divider');
+    const p1Content = document.querySelector('.content-wrapper');
+    if (p1Hero) p1Hero.style.display = panelId === 'p1' ? 'grid' : 'none';
+    if (p1Divider) p1Divider.style.display = panelId === 'p1' ? 'block' : 'none';
+    if (p1Content) p1Content.style.display = panelId === 'p1' ? 'grid' : 'none';
+
+    // Toggle nav tabs
+    document.getElementById('nav-tabs-p1').style.display = panelId === 'p1' ? 'flex' : 'none';
+    document.getElementById('nav-tabs-p2').style.display = panelId === 'p2' ? 'flex' : 'none';
+
+    // Activate panel button
+    document.querySelectorAll('.panel-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    // Reset to article view for whichever panel
+    if (panelId === 'p1') {
+      switchView('article', document.querySelector('#nav-tabs-p1 .nav-tab'));
+    } else {
+      switchView('p2-article', document.querySelector('#nav-tabs-p2 .nav-tab'));
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function switchView(id, btn) {
+    const prefix = currentPanel === 'p2' ? 'p2-' : '';
+    const isP2 = currentPanel === 'p2';
+
+    // Hide all views in current panel
+    if (isP2) {
+      document.querySelectorAll('#panel-p2 .view').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('#nav-tabs-p2 .nav-tab').forEach(t => t.classList.remove('active'));
+    } else {
+      document.querySelectorAll('.content-wrapper .view').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('#nav-tabs-p1 .nav-tab').forEach(t => t.classList.remove('active'));
+    }
+
+    const view = document.getElementById('view-' + id);
+    if (view) view.classList.add('active');
+    if (btn) btn.classList.add('active');
+
+    // Section nav
+    const sn1 = document.getElementById('sectionNav');
+    const sn2 = document.getElementById('sectionNav-p2');
+    if (sn1) sn1.style.display = (id === 'article') ? 'block' : 'none';
+    if (sn2) sn2.style.display = (id === 'p2-article') ? 'block' : 'none';
+
+    window.scrollTo({ top: 56, behavior: 'smooth' });
+  }
+
+  function scrollTo(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    document.querySelectorAll('.section-link').forEach(l => l.classList.remove('active'));
+    const link = document.getElementById('nav-' + id);
+    if (link) link.classList.add('active');
+  }
+
+  function scrollToSec(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    document.querySelectorAll('.section-link').forEach(l => l.classList.remove('active'));
+    const link = document.getElementById('nav-' + id);
+    if (link) link.classList.add('active');
+  }
+
+  // Scroll spy
+  const sections = ['s1','s2','s3','s4','s5','s6'];
+  const p2sections = ['p2s1','p2s2','p2s3','p2s4','p2s5','p2s6'];
+  window.addEventListener('scroll', () => {
+    if (currentPanel === 'p1' && document.getElementById('view-article').classList.contains('active')) {
+      let current = sections[0];
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top < 120) current = id;
+      });
+      document.querySelectorAll('.section-link').forEach(l => l.classList.remove('active'));
+      const link = document.getElementById('nav-' + current);
+      if (link) link.classList.add('active');
+    }
+    if (currentPanel === 'p2' && document.getElementById('view-p2-article').classList.contains('active')) {
+      let current = p2sections[0];
+      p2sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top < 120) current = id;
+      });
+      document.querySelectorAll('.section-link').forEach(l => l.classList.remove('active'));
+      const link = document.getElementById('nav-' + current);
+      if (link) link.classList.add('active');
+    }
+  });
+
+  // Tag filter (visual only)
+  document.querySelectorAll('.tag').forEach(tag => {
+    tag.addEventListener('click', function() {
+      this.closest('.hero-tags').querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
