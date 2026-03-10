@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PanelIntelligence Admin</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; max-width: 960px; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+    textarea,input { width: 100%; margin-top: 8px; }
+    button { margin-top: 8px; }
+    pre { background: #111; color: #0f0; padding: 12px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>Admin Speaker Upload Flow</h1>
+  <p>Use header token <code>x-admin-token</code> (default local-dev-token) to run imports, headshot upload, and approvals.</p>
+
+  <div class="card">
+    <h3>1) CSV import</h3>
+    <input id="token" placeholder="admin token" value="local-dev-token" />
+    <textarea id="csv" rows="6" placeholder="name,bio_markdown,role,org,email\nAda,Researcher in [[future-of-work]],Lead,TIF,ada@example.org"></textarea>
+    <button onclick="runImport()">Import CSV</button>
+  </div>
+
+  <div class="card">
+    <h3>2) Headshot upload (base64 JSON)</h3>
+    <input id="slug" placeholder="speaker slug" />
+    <input id="file" type="file" accept="image/png,image/jpeg,image/webp" />
+    <button onclick="uploadHeadshot()">Upload Headshot</button>
+  </div>
+
+  <div class="card">
+    <h3>3) Review + approve</h3>
+    <button onclick="loadPending()">Load Pending</button>
+    <input id="approveSlug" placeholder="speaker slug to approve" />
+    <button onclick="approve()">Approve</button>
+  </div>
+
+  <pre id="out">Ready.</pre>
+
+<script>
+const out = document.getElementById('out');
+async function call(path, body, method='POST') {
+  const token = document.getElementById('token').value;
+  const res = await fetch(path, { method, headers: { 'content-type': 'application/json', 'x-admin-token': token, 'x-admin-user': 'admin-ui' }, body: body ? JSON.stringify(body) : undefined });
+  out.textContent = JSON.stringify(await res.json(), null, 2);
+}
+async function runImport() {
+  await call('/admin/speakers/import', { csv: document.getElementById('csv').value });
+}
+async function uploadHeadshot() {
+  const f = document.getElementById('file').files[0];
+  const slug = document.getElementById('slug').value;
+  if (!f || !slug) return;
+  const data = await f.arrayBuffer();
+  const b64 = btoa(String.fromCharCode(...new Uint8Array(data)));
+  await call(`/admin/speakers/${slug}/headshot`, { filename: f.name, mime: f.type, width: 512, height: 512, data_base64: b64 });
+}
+async function loadPending() {
+  const token = document.getElementById('token').value;
+  const res = await fetch('/admin/speakers/review', { headers: { 'x-admin-token': token } });
+  out.textContent = JSON.stringify(await res.json(), null, 2);
+}
+async function approve() {
+  const slug = document.getElementById('approveSlug').value;
+  await call(`/admin/speakers/${slug}/publish`, {});
+}
+</script>
+</body>
+</html>

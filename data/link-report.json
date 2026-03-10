@@ -1,0 +1,29 @@
+{
+  "generated_at": "2026-03-10T06:10:50.378Z",
+  "edges": 9,
+  "deduped_count": 0,
+  "broken_links": [
+    {
+      "id": "lnk_4",
+      "source_type": "speaker",
+      "source_id": "kerin-vanandel",
+      "target_type": "concept",
+      "target_id": "moderation",
+      "relation_type": "expertise",
+      "created_at": "2026-03-10T06:10:50.377Z",
+      "updated_at": "2026-03-10T06:10:50.377Z",
+      "deleted_at": null
+    },
+    {
+      "id": "lnk_6",
+      "source_type": "speaker",
+      "source_id": "thomas-andriola",
+      "target_type": "concept",
+      "target_id": "ai-adoption",
+      "relation_type": "expertise",
+      "created_at": "2026-03-10T06:10:50.377Z",
+      "updated_at": "2026-03-10T06:10:50.377Z",
+      "deleted_at": null
+    }
+  ]
+}
