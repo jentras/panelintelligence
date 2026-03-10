@@ -443,6 +443,56 @@
     text-underline-offset: 2px;
   }
 
+
+  /* ── KNOWLEDGE GRAPH ── */
+  .graph-shell {
+    position: relative;
+    background: #121317;
+    border: 1px solid #272a33;
+    border-radius: 16px;
+    min-height: 560px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+  }
+  .graph-canvas-wrap { position: relative; min-height: 560px; }
+  .graph-canvas { width: 100%; height: 100%; display: block; touch-action: none; }
+  .graph-hud {
+    position: absolute; top: 14px; left: 14px; z-index: 2;
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .graph-chip {
+    background: rgba(11,13,16,0.85); color: #D7DAE0;
+    border: 1px solid #353949; border-radius: 100px;
+    font-size: 11px; padding: 4px 10px;
+  }
+  .graph-empty { color: #D7DAE0; padding: 24px; }
+  .graph-details {
+    border-left: 1px solid #272a33;
+    background: #0f1117; color: #ECEFF4;
+    padding: 18px 16px; overflow-y: auto;
+  }
+  .graph-details h3 { font-size: 18px; margin-bottom: 4px; }
+  .graph-meta { color: #A6ADBA; font-size: 12px; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .graph-open {
+    display: inline-block; border: 1px solid #454E63; color: #ECEFF4;
+    padding: 8px 12px; border-radius: 10px; text-decoration: none; font-size: 13px;
+    margin-bottom: 12px;
+  }
+  .graph-open:hover { border-color: var(--orange); color: var(--orange-light); }
+  .graph-related-title { font-size: 12px; color: #A6ADBA; margin: 10px 0 6px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .graph-related { display: flex; flex-direction: column; gap: 8px; }
+  .graph-related button {
+    text-align: left; background: #161924; color: #ECEFF4; border: 1px solid #2A2F40;
+    border-radius: 10px; padding: 10px; font-size: 12px; cursor: pointer;
+  }
+  .graph-related button:hover { border-color: var(--orange); }
+  .graph-related small { color: #A6ADBA; display: block; margin-top: 4px; }
+  .graph-legend { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .graph-legend-item { font-size: 11px; color: #A6ADBA; display: inline-flex; align-items: center; gap: 6px; }
+  .graph-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+
   /* ── DIVIDER ── */
   .divider {
     height: 1px; background: var(--gray-200);
@@ -490,6 +540,10 @@
     .cliffnotes-hero { padding: 24px 20px; }
     .takeaway { padding: 16px; }
     .article-section { margin-bottom: 44px; padding-bottom: 44px; }
+    .graph-shell { grid-template-columns: 1fr; min-height: 70vh; }
+    .graph-canvas-wrap { min-height: 46vh; }
+    .graph-details { border-left: none; border-top: 1px solid #272a33; max-height: 32vh; }
+    .graph-related button { padding: 12px; font-size: 13px; }
     footer { padding: 24px 16px !important; }
   }
 
@@ -524,6 +578,7 @@
     <button class="nav-tab" onclick="switchView('notes', this)">Atomic Notes</button>
     <button class="nav-tab" onclick="switchView('mindmap', this)">Mind Map</button>
     <button class="nav-tab" onclick="switchView('speakers', this)">Speakers</button>
+    <button class="nav-tab" onclick="switchView('graph', this)">Knowledge Graph</button>
   </div>
   <div class="nav-tabs" id="nav-tabs-p2" style="display:none">
     <button class="nav-tab active" onclick="switchView('p2-article', this)">Article</button>
@@ -531,6 +586,7 @@
     <button class="nav-tab" onclick="switchView('p2-notes', this)">Atomic Notes</button>
     <button class="nav-tab" onclick="switchView('p2-mindmap', this)">Mind Map</button>
     <button class="nav-tab" onclick="switchView('p2-speakers', this)">Speakers</button>
+    <button class="nav-tab" onclick="switchView('p2-graph', this)">Knowledge Graph</button>
   </div>
 </nav>
 
@@ -970,6 +1026,32 @@
         </div>
       </div>
     </div><!-- /view-mindmap -->
+
+    <div id="view-graph" class="view">
+      <div class="cliffnotes-hero" style="background:#0f1117">
+        <h2>Knowledge Graph</h2>
+        <p>Explore panels, speakers, concepts, and notes through bidirectional relationships. Pan, zoom, and tap nodes to traverse connected knowledge.</p>
+      </div>
+      <div class="graph-shell" data-graph-panel="p1">
+        <div class="graph-canvas-wrap">
+          <div class="graph-hud">
+            <span class="graph-chip">Drag to pan</span>
+            <span class="graph-chip">Scroll / pinch to zoom</span>
+            <span class="graph-chip">Tap node to open content</span>
+          </div>
+          <svg class="graph-canvas" id="graph-canvas-p1" viewBox="0 0 900 560" aria-label="Knowledge graph visualization"></svg>
+        </div>
+        <aside class="graph-details" id="graph-details-p1">
+          <div class="graph-legend">
+            <span class="graph-legend-item"><span class="graph-dot" style="background:#7dd3fc"></span>Panel</span>
+            <span class="graph-legend-item"><span class="graph-dot" style="background:#fca5a5"></span>Speaker</span>
+            <span class="graph-legend-item"><span class="graph-dot" style="background:#86efac"></span>Concept</span>
+            <span class="graph-legend-item"><span class="graph-dot" style="background:#fcd34d"></span>Note</span>
+          </div>
+          <p>Select a node to inspect backlinks and related ideas.</p>
+        </aside>
+      </div>
+    </div><!-- /view-graph -->
 
     <!-- ══ SPEAKERS VIEW ══ -->
     <div id="view-speakers" class="view">
@@ -1470,6 +1552,33 @@
       </div>
     </div><!-- /view-p2-mindmap -->
 
+
+    <div id="view-p2-graph" class="view">
+      <div class="cliffnotes-hero" style="background:#0f1117">
+        <h2>Knowledge Graph</h2>
+        <p>Navigate connected themes, panelists, and session notes as a networked knowledge base.</p>
+      </div>
+      <div class="graph-shell" data-graph-panel="p2">
+        <div class="graph-canvas-wrap">
+          <div class="graph-hud">
+            <span class="graph-chip">Drag to pan</span>
+            <span class="graph-chip">Scroll / pinch to zoom</span>
+            <span class="graph-chip">Tap node to open content</span>
+          </div>
+          <svg class="graph-canvas" id="graph-canvas-p2" viewBox="0 0 900 560" aria-label="Knowledge graph visualization"></svg>
+        </div>
+        <aside class="graph-details" id="graph-details-p2">
+          <div class="graph-legend">
+            <span class="graph-legend-item"><span class="graph-dot" style="background:#7dd3fc"></span>Panel</span>
+            <span class="graph-legend-item"><span class="graph-dot" style="background:#fca5a5"></span>Speaker</span>
+            <span class="graph-legend-item"><span class="graph-dot" style="background:#86efac"></span>Concept</span>
+            <span class="graph-legend-item"><span class="graph-dot" style="background:#fcd34d"></span>Note</span>
+          </div>
+          <p>Select a node to inspect backlinks and related ideas.</p>
+        </aside>
+      </div>
+    </div><!-- /view-p2-graph -->
+
     <!-- SPEAKERS P2 -->
     <div id="view-p2-speakers" class="view">
       <div class="section-heading" style="margin-bottom:24px">Panel Speakers</div>
@@ -1613,6 +1722,9 @@
     if (sn1) sn1.style.display = (id === 'article') ? 'block' : 'none';
     if (sn2) sn2.style.display = (id === 'p2-article') ? 'block' : 'none';
 
+    if (id === 'graph') drawGraph('p1');
+    if (id === 'p2-graph') drawGraph('p2');
+
     window.scrollTo({ top: 56, behavior: 'smooth' });
   }
 
@@ -1657,6 +1769,144 @@
       if (link) link.classList.add('active');
     }
   });
+
+
+  const graphState = { loaded: false, data: { nodes: [], edges: [] }, byId: new Map() };
+
+  function nodeColor(type) {
+    if (type === 'panel') return '#7dd3fc';
+    if (type === 'speaker') return '#fca5a5';
+    if (type === 'concept') return '#86efac';
+    if (type === 'note') return '#fcd34d';
+    return '#c4b5fd';
+  }
+
+  function openNodeContent(node) {
+    if (!node) return;
+    if (node.type === 'speaker') return switchView(currentPanel === 'p2' ? 'p2-speakers' : 'speakers');
+    if (node.type === 'note') return switchView(currentPanel === 'p2' ? 'p2-notes' : 'notes');
+    if (node.type === 'concept') return switchView(currentPanel === 'p2' ? 'p2-notes' : 'notes');
+    return switchView(currentPanel === 'p2' ? 'p2-article' : 'article');
+  }
+
+  async function ensureGraphData() {
+    if (graphState.loaded) return graphState.data;
+    const res = await fetch('/api/graph');
+    const data = await res.json();
+    graphState.data = data;
+    graphState.byId = new Map((data.nodes || []).map(n => [n.slug, n]));
+    graphState.loaded = true;
+    return data;
+  }
+
+  function renderNodeDetails(panel, nodeId, related) {
+    const details = document.getElementById(`graph-details-${panel}`);
+    if (!details) return;
+    const node = graphState.byId.get(nodeId);
+    if (!node) return;
+    const relatedHtml = related.slice(0, 8).map((r) => {
+      const target = graphState.byId.get(r.target);
+      if (!target) return '';
+      return `<button type="button" data-related="${target.slug}">${target.title}<small>${target.type} · ${r.relation}</small></button>`;
+    }).join('');
+    details.innerHTML = `
+      <h3>${node.title}</h3>
+      <div class="graph-meta">${node.type} · ${node.degree || 0} connections</div>
+      <a href="#" class="graph-open" data-open-node="${node.slug}">Open related content</a>
+      <div class="graph-related-title">Connected nodes / backlinks</div>
+      <div class="graph-related">${relatedHtml || '<div class="graph-empty">No linked neighbors yet.</div>'}</div>
+    `;
+    details.querySelector('[data-open-node]')?.addEventListener('click', (e) => { e.preventDefault(); openNodeContent(node); });
+    details.querySelectorAll('[data-related]').forEach((btn) => {
+      btn.addEventListener('click', () => drawGraph(panel, btn.getAttribute('data-related')));
+    });
+  }
+
+  async function drawGraph(panel, focusId = null) {
+    const svg = document.getElementById(`graph-canvas-${panel}`);
+    if (!svg) return;
+    const data = await ensureGraphData();
+    const nodes = (data.nodes || []).map((n, i) => ({ ...n, x: 100 + (i % 8) * 100 + Math.random() * 20, y: 80 + Math.floor(i / 8) * 80 + Math.random() * 20 }));
+    const edges = (data.edges || []).filter((e) => graphState.byId.has(e.source) && graphState.byId.has(e.target));
+    const nodeMap = new Map(nodes.map((n) => [n.slug, n]));
+
+    for (let tick = 0; tick < 120; tick++) {
+      edges.forEach((e) => {
+        const a = nodeMap.get(e.source);
+        const b = nodeMap.get(e.target);
+        if (!a || !b) return;
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        const dist = Math.max(20, Math.hypot(dx, dy));
+        const force = (dist - 90) * 0.0018;
+        a.x += dx * force; a.y += dy * force;
+        b.x -= dx * force; b.y -= dy * force;
+      });
+      nodes.forEach((a, idx) => {
+        for (let j = idx + 1; j < nodes.length; j++) {
+          const b = nodes[j];
+          const dx = b.x - a.x;
+          const dy = b.y - a.y;
+          const dist = Math.max(1, Math.hypot(dx, dy));
+          if (dist > 120) continue;
+          const rep = (120 - dist) * 0.006;
+          a.x -= (dx / dist) * rep; a.y -= (dy / dist) * rep;
+          b.x += (dx / dist) * rep; b.y += (dy / dist) * rep;
+        }
+        a.x = Math.max(30, Math.min(870, a.x));
+        a.y = Math.max(30, Math.min(530, a.y));
+      });
+    }
+
+    const gEdges = edges.map((e) => {
+      const a = nodeMap.get(e.source), b = nodeMap.get(e.target);
+      const dim = focusId && e.source !== focusId && e.target !== focusId;
+      return `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="${dim ? '#2c3142' : '#616b84'}" stroke-opacity="${e.isInferred ? 0.35 : 0.7}" stroke-width="1.2" />`;
+    }).join('');
+
+    const gNodes = nodes.map((n) => {
+      const active = n.slug === focusId;
+      const radius = 6 + Math.min(8, Math.max(0, (n.degree || 0) * 0.45));
+      const faded = focusId && n.slug !== focusId && !edges.some((e) => (e.source === focusId && e.target === n.slug) || (e.target === focusId && e.source === n.slug));
+      return `<g data-node="${n.slug}" style="cursor:pointer">
+        <circle cx="${n.x}" cy="${n.y}" r="${active ? radius + 3 : radius}" fill="${nodeColor(n.type)}" opacity="${faded ? 0.35 : 0.95}" stroke="${active ? '#fff' : '#0f1117'}" stroke-width="${active ? 2.5 : 1.2}"/>
+        <text x="${n.x + radius + 4}" y="${n.y + 4}" fill="${faded ? '#6b7280' : '#dbe3ee'}" font-size="11">${n.title.slice(0, 28)}</text>
+      </g>`;
+    }).join('');
+
+    svg.innerHTML = `<g id="graph-viewport-${panel}">${gEdges}${gNodes}</g>`;
+
+    const related = focusId ? edges.filter((e) => e.source === focusId).slice(0, 20) : [];
+    if (focusId) renderNodeDetails(panel, focusId, related);
+
+    let scale = 1, panX = 0, panY = 0, dragging = false, lastX = 0, lastY = 0;
+    const viewport = svg.querySelector(`#graph-viewport-${panel}`);
+    const applyTx = () => viewport.setAttribute('transform', `translate(${panX} ${panY}) scale(${scale})`);
+    applyTx();
+
+    svg.onwheel = (e) => {
+      e.preventDefault();
+      scale = Math.max(0.55, Math.min(2.4, scale + (e.deltaY > 0 ? -0.08 : 0.08)));
+      applyTx();
+    };
+    svg.onpointerdown = (e) => { dragging = true; lastX = e.clientX; lastY = e.clientY; svg.setPointerCapture(e.pointerId); };
+    svg.onpointermove = (e) => {
+      if (!dragging) return;
+      panX += e.clientX - lastX; panY += e.clientY - lastY;
+      lastX = e.clientX; lastY = e.clientY;
+      applyTx();
+    };
+    svg.onpointerup = () => { dragging = false; };
+
+    svg.querySelectorAll('[data-node]').forEach((el) => {
+      el.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const slug = el.getAttribute('data-node');
+        drawGraph(panel, slug);
+        setTimeout(() => openNodeContent(graphState.byId.get(slug)), 140);
+      });
+    });
+  }
 
   // Tag filter (visual only)
   document.querySelectorAll('.tag').forEach(tag => {

@@ -85,9 +85,9 @@ function buildNodeIndex() {
   const quotes = readJson('quotes.json');
   const nodes = new Map();
   speakers.filter((s) => !s.deleted_at).forEach((s) => nodes.set(s.slug, { type: 'speaker', slug: s.slug, title: s.name }));
-  sessions.filter((s) => !s.deleted_at).forEach((s) => nodes.set(s.slug, { type: 'session', slug: s.slug, title: s.title }));
+  sessions.filter((s) => !s.deleted_at).forEach((s) => nodes.set(s.slug, { type: 'panel', slug: s.slug, title: s.title }));
   concepts.filter((c) => !c.deleted_at).forEach((c) => nodes.set(c.slug, { type: 'concept', slug: c.slug, title: c.name }));
-  quotes.filter((q) => !q.deleted_at).forEach((q) => nodes.set(q.id, { type: 'quote', slug: q.id, title: q.quote_text.slice(0, 40) }));
+  quotes.filter((q) => !q.deleted_at).forEach((q) => nodes.set(q.id, { type: 'note', slug: q.id, title: q.quote_text.slice(0, 70) }));
   return nodes;
 }
 
@@ -125,7 +125,7 @@ function reindexLinks() {
       addEdge({ id: `lnk_${links.length + 1}`, source_type: 'session', source_id: session.slug, target_type: nodeIndex.get(targetSlug)?.type || 'unknown', target_id: targetSlug, relation_type: inferRelationType(session.abstract_markdown, targetSlug, 'mentions'), created_at: nowIso(), updated_at: nowIso(), deleted_at: null });
     });
     (session.speaker_slugs || []).forEach((speakerSlug) => {
-      addEdge({ id: `lnk_${links.length + 1}`, source_type: 'session', source_id: session.slug, target_type: 'speaker', target_id: speakerSlug, relation_type: 'co_speaks_with', created_at: nowIso(), updated_at: nowIso(), deleted_at: null });
+      addEdge({ id: `lnk_${links.length + 1}`, source_type: 'panel', source_id: session.slug, target_type: 'speaker', target_id: speakerSlug, relation_type: 'co_speaks_with', created_at: nowIso(), updated_at: nowIso(), deleted_at: null });
     });
   });
 
@@ -308,8 +308,70 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (req.method === 'GET' && pathname === '/api/graph') {
-      const nodes = [...buildNodeIndex().values()];
-      const edges = readJson('links.json').filter((l) => !l.deleted_at).map((l) => ({ source: l.source_id, target: l.target_id, relation: l.relation_type }));
+      const nodeIndex = buildNodeIndex();
+      const allEdges = readJson('links.json').filter((l) => !l.deleted_at);
+      const speakers = readJson('speakers.json').filter((s) => !s.deleted_at);
+      const sessions = readJson('sessions.json').filter((sess) => !sess.deleted_at);
+      const quotes = readJson('quotes.json').filter((q) => !q.deleted_at);
+      const edges = [];
+      const edgeSeen = new Set();
+      const incoming = new Map();
+      const outgoing = new Map();
+
+      function remember(source, target) {
+        outgoing.set(source, (outgoing.get(source) || 0) + 1);
+        incoming.set(target, (incoming.get(target) || 0) + 1);
+      }
+
+      function addGraphEdge(source, target, relation, isInferred = false) {
+        if (!nodeIndex.has(source) || !nodeIndex.has(target)) return;
+        const key = `${source}|${target}|${relation}`;
+        if (edgeSeen.has(key)) return;
+        edgeSeen.add(key);
+        edges.push({ source, target, relation, isInferred });
+        remember(source, target);
+      }
+
+      allEdges.forEach((edge) => {
+        addGraphEdge(edge.source_id, edge.target_id, edge.relation_type, false);
+        addGraphEdge(edge.target_id, edge.source_id, `backlink:${edge.relation_type}`, true);
+      });
+
+      quotes.forEach((quote) => {
+        addGraphEdge(quote.id, quote.speaker_slug, 'quote_of', true);
+        addGraphEdge(quote.speaker_slug, quote.id, 'has_quote', true);
+        addGraphEdge(quote.id, quote.session_slug, 'from_panel', true);
+        addGraphEdge(quote.session_slug, quote.id, 'panel_note', true);
+      });
+
+      sessions.forEach((session) => {
+        (session.speaker_slugs || []).forEach((speakerSlug) => {
+          addGraphEdge(session.slug, speakerSlug, 'panel_speaker', true);
+          addGraphEdge(speakerSlug, session.slug, 'speaker_panel', true);
+        });
+      });
+
+      speakers.forEach((speaker, i) => {
+        (speaker.concepts || []).forEach((conceptSlug) => {
+          addGraphEdge(speaker.slug, conceptSlug, 'expertise', true);
+          addGraphEdge(conceptSlug, speaker.slug, 'backlink:expertise', true);
+        });
+        for (let j = i + 1; j < speakers.length; j++) {
+          const other = speakers[j];
+          const overlap = (speaker.concepts || []).filter((concept) => (other.concepts || []).includes(concept));
+          if (overlap.length) {
+            addGraphEdge(speaker.slug, other.slug, `shared_topic:${overlap[0]}`, true);
+            addGraphEdge(other.slug, speaker.slug, `shared_topic:${overlap[0]}`, true);
+          }
+        }
+      });
+
+      const nodes = [...nodeIndex.values()].map((node) => ({
+        ...node,
+        degree: (incoming.get(node.slug) || 0) + (outgoing.get(node.slug) || 0),
+        outgoing: outgoing.get(node.slug) || 0,
+        incoming: incoming.get(node.slug) || 0
+      }));
       return sendJson(res, 200, { nodes, edges });
     }
 
