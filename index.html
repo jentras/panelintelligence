@@ -434,6 +434,14 @@
   }
   .note-speaker { font-size: 11px; color: var(--orange); font-weight: 500; }
   .note-link-count { font-size: 11px; color: var(--gray-400); }
+  .note-speaker.clickable,
+  .note-link-count.clickable,
+  .speaker-chip.clickable {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
 
   /* ── DIVIDER ── */
   .divider {
@@ -443,17 +451,46 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; padding: 60px 24px 40px; gap: 40px; }
+    nav {
+      padding: 10px 16px;
+      height: auto;
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .nav-brand { width: 100%; justify-content: space-between; }
+    .panel-switcher { margin-left: 0; }
+    .nav-tabs {
+      display: flex;
+      width: 100%;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: thin;
+    }
+    .nav-tab {
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      font-size: 12px;
+      border: 1px solid var(--gray-200);
+      background: var(--white);
+    }
+    .hero { grid-template-columns: 1fr; padding: 110px 16px 36px; gap: 28px; }
     .hero .sidebar { padding-top: 0; }
-    .content-wrapper { grid-template-columns: 1fr; padding: 0 24px 80px; }
+    .hero-meta { flex-wrap: wrap; gap: 10px; }
+    .hero-lead { font-size: 16px; }
+    .content-wrapper { grid-template-columns: 1fr; padding: 0 16px 72px; }
     .section-nav { display: none; }
     .speakers-grid { grid-template-columns: 1fr; }
     .speaker-card.moderator { flex-direction: column; }
-    .notes-grid { grid-template-columns: 1fr 1fr; }
+    .notes-grid { grid-template-columns: 1fr; }
     .signals-grid { grid-template-columns: 1fr; }
-    nav { padding: 0 24px; }
-    .nav-tabs { display: none; }
     .mindmap-branches { grid-template-columns: 1fr; }
+    .mindmap-container { padding: 20px 16px; }
+    .cliffnotes-hero { padding: 24px 20px; }
+    .takeaway { padding: 16px; }
+    .article-section { margin-bottom: 44px; padding-bottom: 44px; }
+    footer { padding: 24px 16px !important; }
   }
 
   /* ── INLINE HIGHLIGHT ── */
@@ -1626,6 +1663,39 @@
     tag.addEventListener('click', function() {
       this.closest('.hero-tags').querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
       this.classList.add('active');
+    });
+  });
+
+  // Lightweight bi-directional links between notes/cliffnotes and speaker pages.
+  document.querySelectorAll('.note-speaker').forEach(el => {
+    el.classList.add('clickable');
+    el.title = 'Open speaker profiles';
+    el.addEventListener('click', () => {
+      switchView(currentPanel === 'p2' ? 'p2-speakers' : 'speakers');
+    });
+  });
+
+  document.querySelectorAll('.speaker-chip').forEach(el => {
+    el.classList.add('clickable');
+    el.title = 'Open speaker profiles';
+    el.addEventListener('click', () => {
+      switchView(currentPanel === 'p2' ? 'p2-speakers' : 'speakers');
+    });
+  });
+
+  document.querySelectorAll('.note-link-count').forEach(el => {
+    el.classList.add('clickable');
+    el.title = 'Open related mind map';
+    el.addEventListener('click', () => {
+      switchView(currentPanel === 'p2' ? 'p2-mindmap' : 'mindmap');
+    });
+  });
+
+  document.querySelectorAll('.speaker-card').forEach(card => {
+    card.title = 'Open atomic notes for this panel';
+    card.addEventListener('click', (event) => {
+      if (event.target.closest('a')) return;
+      switchView(currentPanel === 'p2' ? 'p2-notes' : 'notes');
     });
   });
 </script>
