@@ -1,0 +1,11 @@
+{
+  "name": "panelintelligence",
+  "version": "1.0.0",
+  "description": "Conference knowledge garden backend + static frontend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js",
+    "test": "node scripts/validate-api.mjs"
+  }
+}

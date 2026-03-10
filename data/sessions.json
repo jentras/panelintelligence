@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ses_ai_coworkers",
+    "slug": "ai-co-workers-panel",
+    "title": "AI Co-Workers: Redefining Human Roles",
+    "abstract_markdown": "Panel on [[future-of-work]], [[healthcare-ai]], and labor. References [/thomas-andriola].",
+    "event_id": "tif-2025",
+    "datetime": "2025-10-01T18:00:00Z",
+    "speaker_slugs": ["kerin-vanandel", "thomas-andriola"]
+  }
+]

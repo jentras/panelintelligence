@@ -1,0 +1,83 @@
+[
+  {
+    "id": "lnk_1",
+    "source_type": "speaker",
+    "source_id": "kerin-vanandel",
+    "target_type": "session",
+    "target_id": "ai-co-workers-panel",
+    "relation_type": "mentions",
+    "created_at": "2026-03-10T05:43:18.549Z"
+  },
+  {
+    "id": "lnk_2",
+    "source_type": "speaker",
+    "source_id": "kerin-vanandel",
+    "target_type": "concept",
+    "target_id": "future-of-work",
+    "relation_type": "mentions",
+    "created_at": "2026-03-10T05:43:18.549Z"
+  },
+  {
+    "id": "lnk_3",
+    "source_type": "speaker",
+    "source_id": "kerin-vanandel",
+    "target_type": "concept",
+    "target_id": "future-of-work",
+    "relation_type": "expertise",
+    "created_at": "2026-03-10T05:43:18.549Z"
+  },
+  {
+    "id": "lnk_4",
+    "source_type": "speaker",
+    "source_id": "thomas-andriola",
+    "target_type": "concept",
+    "target_id": "healthcare-ai",
+    "relation_type": "mentions",
+    "created_at": "2026-03-10T05:43:18.549Z"
+  },
+  {
+    "id": "lnk_5",
+    "source_type": "speaker",
+    "source_id": "thomas-andriola",
+    "target_type": "concept",
+    "target_id": "healthcare-ai",
+    "relation_type": "expertise",
+    "created_at": "2026-03-10T05:43:18.549Z"
+  },
+  {
+    "id": "lnk_6",
+    "source_type": "session",
+    "source_id": "ai-co-workers-panel",
+    "target_type": "concept",
+    "target_id": "future-of-work",
+    "relation_type": "references",
+    "created_at": "2026-03-10T05:43:18.549Z"
+  },
+  {
+    "id": "lnk_7",
+    "source_type": "session",
+    "source_id": "ai-co-workers-panel",
+    "target_type": "concept",
+    "target_id": "healthcare-ai",
+    "relation_type": "references",
+    "created_at": "2026-03-10T05:43:18.549Z"
+  },
+  {
+    "id": "lnk_8",
+    "source_type": "session",
+    "source_id": "ai-co-workers-panel",
+    "target_type": "speaker",
+    "target_id": "kerin-vanandel",
+    "relation_type": "features",
+    "created_at": "2026-03-10T05:43:18.549Z"
+  },
+  {
+    "id": "lnk_9",
+    "source_type": "session",
+    "source_id": "ai-co-workers-panel",
+    "target_type": "speaker",
+    "target_id": "thomas-andriola",
+    "relation_type": "features",
+    "created_at": "2026-03-10T05:43:18.549Z"
+  }
+]

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How this was made — panelintelligence</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #fafafa; color: #111; }
+    main { max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; line-height: 1.6; }
+    h1, h2 { line-height: 1.2; }
+    code, pre { background: #f0f0f0; border-radius: 6px; }
+    code { padding: 2px 6px; }
+    pre { padding: 16px; overflow: auto; }
+    .card { background: white; border: 1px solid #e6e6e6; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>How this was made</h1>
+    <p>This project is an open-source knowledge garden for event organizers and nonprofits. It supports speaker uploads, bidirectional links, graph views, and share-ready quote cards.</p>
+
+    <div class="card">
+      <h2>Architecture</h2>
+      <ul>
+        <li>Static front-end in <code>index.html</code></li>
+        <li>Node HTTP backend in <code>server.js</code></li>
+        <li>JSON data store in <code>data/*.json</code></li>
+        <li>Link reindex job at <code>POST /api/links/reindex</code></li>
+        <li>Obsidian export at <code>GET /api/export/obsidian</code></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Open-source replication guide</h2>
+      <ol>
+        <li><code>npm install</code></li>
+        <li><code>npm start</code></li>
+        <li>Upload speakers via <code>POST /api/speakers</code> or <code>/api/speakers/import</code></li>
+        <li>Run <code>POST /api/links/reindex</code> to build backlinks</li>
+        <li>Generate quote cards with <code>POST /api/quotes/:id/generate-card</code></li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h2>Data ethics and consent</h2>
+      <p>Only publish approved quotes and media. Keep consent flags for speaker promotional assets and include removal workflows for nonprofit compliance.</p>
+    </div>
+  </main>
+</body>
+</html>
