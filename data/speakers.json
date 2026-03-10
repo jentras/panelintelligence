@@ -1,0 +1,26 @@
+[
+  {
+    "id": "spk_kerin",
+    "slug": "kerin-vanandel",
+    "name": "Kerin VanAndel",
+    "role": "Moderator",
+    "org": "TIF",
+    "bio_markdown": "Moderator of [[ai-co-workers-panel]]. Interested in [[future-of-work]] and cross-sector learning.",
+    "headshot_url": "",
+    "concepts": ["future-of-work", "moderation"],
+    "socials": {"linkedin": ""},
+    "consent_flags": {"quote_cards": true}
+  },
+  {
+    "id": "spk_thomas",
+    "slug": "thomas-andriola",
+    "name": "Thomas Andriola",
+    "role": "Vice Chancellor IT & CDO",
+    "org": "UC Irvine",
+    "bio_markdown": "Healthcare transformation advocate. Mentioned in [/ai-co-workers-panel] and linked to [[healthcare-ai]].",
+    "headshot_url": "",
+    "concepts": ["healthcare-ai", "ai-adoption"],
+    "socials": {"linkedin": ""},
+    "consent_flags": {"quote_cards": true}
+  }
+]
